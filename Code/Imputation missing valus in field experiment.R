@@ -20,7 +20,7 @@ mytheme = theme_bw()+
          axis.title.y=element_text(colour='black', size=13,vjust = 1),
          axis.text=element_text(colour='black',size=11))
 
-Field_traits <- read.xlsx("Field_experiment_total.xlsx",sheet = "Field_means", rowNames = FALSE, colNames = TRUE)[,c(1:4)]
+Field_traits <- read.xlsx("Data/Imputation_data_in_field.xlsx",sheet = "Imputation_data", rowNames = FALSE, colNames = TRUE)
 rownames(Field_traits) = Field_traits$Species
 head(Field_traits)
 summary(Field_traits)
