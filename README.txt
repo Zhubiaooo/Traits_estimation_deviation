@@ -181,7 +181,7 @@ CODE INFORMATION
 
 1)  Fig 1.R
 
-This script contains all the data analysis and visualization code of fig.1.
+This script contains all the data analysis and visualization code of Fig.1.
 
 2)  Fig 2 & Fig 4 & Fig S2.R
 
