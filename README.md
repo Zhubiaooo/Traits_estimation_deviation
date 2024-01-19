@@ -1,4 +1,4 @@
-The following files allow one to reproduce analyses in the manuscript entitled "Traits estimated when grown alone may underestimate competitive advantage and invasiveness of exotic species" by Biao Zhu, Chunqiang Wei and Xinmin Lu.
+The following files allow one to reproduce analyses in the manuscript entitled "Traits estimated when grown alone may underestimate competitive advantage and invasiveness of exotic species" by Biao Zhu, Chunqiang Wei, Hao Zhou and Xinmin Lu.
 
 DATA & FILE OVERVIEW
 
