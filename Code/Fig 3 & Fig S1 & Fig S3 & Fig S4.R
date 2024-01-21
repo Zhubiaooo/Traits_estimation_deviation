@@ -78,6 +78,7 @@ Com_relative_bio2 = Com_relative_bio
 mod12 <- lmer(rebio2020_100 ~ Origin +  (1|Block/Plot_num), data=Com_relative_bio2)
 summary(mod12)
 anova(mod12)
+Anova(mod12, type="II", test.statistic ="Chisq")
 
 ### Fig S4b
 P1 = ggplot(Com_relative_bio2,aes(x=Origin,y=rebio2020_100))+
@@ -92,7 +93,7 @@ P1 = ggplot(Com_relative_bio2,aes(x=Origin,y=rebio2020_100))+
   mytheme+
   labs(x = NULL, y = 'Relative abundance within the \n plot in second year (%, sqrt) ' ,title = NULL) + 
   scale_y_continuous(position = "left",labels = scales::label_comma(accuracy =0.01))+
-  geom_signif(comparisons = list(c(1,2)),test="t.test", annotations='p = 0.020',tip_length = 0.02,size = 0.5,
+  geom_signif(comparisons = list(c(1,2)),test="t.test", annotations='p = 0.018',tip_length = 0.02,size = 0.5,
               textsize = 4,y_position = 8.8); P1
 
 
