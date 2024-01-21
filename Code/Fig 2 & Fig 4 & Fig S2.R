@@ -156,6 +156,7 @@ data_all_di$Species = as.factor(data_all_di$Species)
 mod = relmatLmer(Di ~ Origin*Type + (1|Species), data = data_all_di, relmat = list(Species=phyloMat))
 summary(mod)
 Anova(mod, type="II", test.statistic ="F")
+Anova(mod, type="II", test.statistic ="Chisq")
 
 ### Deming regressive
 fit <- deming(SLA_Field_means ~ SLA_pot_mean, ystd=SLA_field_sd, xstd=SLA_pot_sd, data=SLA_total_dis)
@@ -279,6 +280,7 @@ data_all_di$Type = factor(data_all_di$Type, levels = c("pot", "field"))
 data_all_di$Species = as.factor(data_all_di$Species)
 mod = relmatLmer(Di ~ Type*Origin + (1|Species), data = data_all_di, relmat = list(Species=phyloMat))
 Anova(mod, type="II", test.statistic ="F")
+Anova(mod, type="II", test.statistic ="Chisq")
 
 ###
 fit <- deming(Hmax_Field_means ~ Hmax_pot_mean, ystd=Hmax_field_sd, xstd=Hmax_pot_sd, data=Hmax_total_dis)
@@ -398,6 +400,7 @@ data_all_di$Type = factor(data_all_di$Type, levels = c("pot", "field"))
 data_all_di$Species = as.factor(data_all_di$Species)
 mod = relmatLmer(Di ~ Origin*Type + (1|Species), data = data_all_di, relmat = list(Species=phyloMat))
 Anova(mod, type="II", test.statistic ="F")
+Anova(mod, type="II", test.statistic ="Chisq")
 
 ###
 fit <- deming(AGB_Field_means ~ AGB_pot_mean, ystd=AGB_field_sd, xstd=AGB_pot_sd, data=AGB_total_dis)
@@ -512,6 +515,7 @@ data_all_di$Type = factor(data_all_di$Type, levels = c("pot", "field"))
 data_all_di$Species = as.factor(data_all_di$Species)
 mod = relmatLmer(Di ~ Origin*Type + (1|Species), data = data_all_di, relmat = list(Species=phyloMat))
 Anova(mod, type="II", test.statistic ="F")
+Anova(mod, type="II", test.statistic ="Chisq")
 
 ###
 fit <- deming(All_Field_means ~ All_pot_mean, ystd=All_field_sd, xstd=All_pot_sd, data=All_total_dis)
@@ -642,7 +646,7 @@ p22
 Com_relative_bio = composition_change_common %>% drop_na(rebio2020)
 length(unique(Com_relative_bio$Species))
 
-### 田间实验
+### Field experiment
 Com_relative_bio2 = Com_relative_bio
 length(unique(Com_relative_bio2$Species))
 
