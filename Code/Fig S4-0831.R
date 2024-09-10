@@ -224,18 +224,18 @@ library(ggplot2)
 field_com_data = read.xlsx("Data/all_row_data0829.xlsx", sheet = "field_data_mean", rowNames = F, colNames = T)
 head(field_com_data)
 
-### 读入田间性状均值
+### 
 Field_trait = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 colnames(Field_trait) <- paste0( "Field_", colnames(Field_trait))
 colnames(Field_trait)[1] <- "Species"
 
-### 读入盆栽性状均值
+### 
 Pot_trait = read.xlsx("Data/Pot_traits_mean0831.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
 colnames(Pot_trait) <- paste0("Pot_", colnames(Pot_trait))
 colnames(Pot_trait)[1] <- "Species"
 nrow(Pot_trait)
 
-### 添加性状值
+### 
 field_com_data = field_com_data %>% left_join(Field_trait[,c(1:5)], by = "Species") %>%
   left_join(Pot_trait, by = "Species")
 colnames(field_com_data)
@@ -244,9 +244,9 @@ field_com_data$Block = as.factor(field_com_data$Block)
 length(unique(field_com_data$Species))
 field_com_data$Seed_source <- factor(field_com_data$Seed_source, levels = rev(c("Guangdong","Guangxi","Hunan","Hubei","Henan","Shandong")))
 
-#### 性状数据转换
+#### 
 field_com_data$Field_SLA_sqrt = sqrt(field_com_data$Field_SLA)
-field_com_data$Field_SLA_sqrt = sqrt(field_com_data$Field_SLA_imp)
+field_com_data$Field_SLA_imp_sqrt = sqrt(field_com_data$Field_SLA_imp)
 field_com_data$Field_Hmax_sqrt = sqrt(field_com_data$Field_Hmax)
 field_com_data$Field_AGB_lg = log10(field_com_data$Field_AGB)
 ##
@@ -257,12 +257,11 @@ field_com_data$Pot_AGB_lg = log10(field_com_data$Pot_AGB)
 field_com_data$exist_prob <- ifelse(!is.na(field_com_data$rebio2020) & field_com_data$rebio2020 > 0, 1, 0)
 field_com_data$Origin = factor(field_com_data$Origin, levels = c("Native","Exotic"))
 
-#### 仅选择存在SLA数据
+#### 
 field_com_data = field_com_data %>% tidyr::drop_na(Field_SLA)
 length(unique(field_com_data$Species))
 
 ################################################################################
-##### 基于田间测量性状数据
 ##### odds of persistence
 Seed_source = unique(field_com_data$Seed_source)
 all_summary_glmer = NULL
@@ -275,7 +274,7 @@ for (i in Seed_source) {
   all_summary_glmer = rbind(all_summary_glmer, mod1_summary)
 }
 
-##### 田间整体数据分析
+##### 
 colnames(field_com_data)
 mod1 = glmer(exist_prob ~ Field_SLA_sqrt + (1|Block/Plot_num), na.action=na.omit, family=binomial, data=field_com_data)
 summary(mod1)
@@ -305,7 +304,7 @@ select_data = field_com_data %>% tidyr::drop_na(rebio2020_100)
 nrow(select_data); length(unique(select_data$Species))
 
 
-######### 可视化 (田间实验)
+######### Visualization
 length(unique(field_com_data$Species))
 unique(field_com_data$Seed_source)
 
@@ -354,7 +353,6 @@ final_selected_row = NULL
 for (i in sp) {
   data_sub = subset(field_com_data_no, Species == i)
   max_index <- which.max(data_sub$rebio2020)
-  # 然后，使用这个索引来选择对应的行
   selected_row <- data_sub[max_index, ]
   final_selected_row = rbind(final_selected_row, selected_row)
 }
