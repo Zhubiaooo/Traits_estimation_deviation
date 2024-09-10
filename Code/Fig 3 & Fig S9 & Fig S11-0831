@@ -412,7 +412,7 @@ sp = unique(field_com_data_no$Species)
 final_selected_row = NULL
 for (i in sp) {
   data_sub = subset(field_com_data_no, Species == i)
-  max_index <- which.max(data_sub$rebio2020)
+  max_index <- which.max(data_sub$rebio2022)
   selected_row <- data_sub[max_index, ]
   final_selected_row = rbind(final_selected_row, selected_row)
 }
@@ -441,7 +441,7 @@ summary(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Field_SLA_imp_sqrt, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Field_SLA_imp_sqrt, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Field_SLA_imp_sqrt,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Hunan" & Seed_source != "Hubei"), mapping = aes(x=Field_SLA_imp_sqrt, y=F0, color = Seed_source), size=1, linetype = 1) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Hunan"), mapping = aes(x=Field_SLA_imp_sqrt, y=F0, color = Seed_source), size=1, linetype = 2) +
@@ -453,7 +453,7 @@ ggplot(field_com_data_no, aes(x=Field_SLA_imp_sqrt, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  #ggrepel::geom_text_repel(mapping = aes(x=Field_SLA_imp_sqrt,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  #ggrepel::geom_text_repel(mapping = aes(x=Field_SLA_imp_sqrt,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
   #                         max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
@@ -476,7 +476,7 @@ Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Field_Hmax_sqrt, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Field_Hmax_sqrt, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Field_Hmax_sqrt,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Guangdong"), mapping = aes(x=Field_Hmax_sqrt, y=F0, color = Seed_source), size=1, linetype = 1) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Guangdong"), mapping = aes(x=Field_Hmax_sqrt, y=F0, color = Seed_source), size=1, linetype = 2) +
@@ -487,7 +487,7 @@ ggplot(field_com_data_no, aes(x=Field_Hmax_sqrt, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  #ggrepel::geom_text_repel(mapping = aes(x=Field_Hmax_sqrt,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  #ggrepel::geom_text_repel(mapping = aes(x=Field_Hmax_sqrt,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
   #                         max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
@@ -510,7 +510,7 @@ Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Field_AGB_lg, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Field_AGB_lg, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Field_AGB_lg,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Guangdong" & Seed_source != "Shandong"), mapping = aes(x=Field_AGB_lg, y=F0, color = Seed_source), size=1, linetype = 1) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Guangdong"), mapping = aes(x=Field_AGB_lg, y=F0, color = Seed_source), size=1, linetype = 2) +
@@ -522,7 +522,7 @@ ggplot(field_com_data_no, aes(x=Field_AGB_lg, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  #ggrepel::geom_text_repel(mapping = aes(x=Field_AGB_lg,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  #ggrepel::geom_text_repel(mapping = aes(x=Field_AGB_lg,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
   #                         max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
@@ -644,7 +644,7 @@ ggplot(field_com_data, aes(x= Pot_AGB_lg, y=exist_prob)) +
 ################################################################################
 unique(field_com_data$Seed_source)
 field_com_data$Seed_source = as.factor(field_com_data$Seed_source)
-field_com_data_no = field_com_data %>% tidyr::drop_na(rebio2020_100)
+field_com_data_no = field_com_data %>% tidyr::drop_na(rebio2022_100)
 unique(field_com_data_no$Species)
 
 ################################################################################
@@ -652,7 +652,7 @@ sp = unique(field_com_data_no$Species)
 final_selected_row = NULL
 for (i in sp) {
   data_sub = subset(field_com_data_no, Species == i)
-  max_index <- which.max(data_sub$rebio2020)
+  max_index <- which.max(data_sub$rebio2022)
   selected_row <- data_sub[max_index, ]
   final_selected_row = rbind(final_selected_row, selected_row)
 }
@@ -662,7 +662,7 @@ first_char <- substr(final_selected_row$Species, 1, 1)
 sub_str <- gsub(".*_", "", final_selected_row$Species)
 Latin_name <- paste(first_char, sub_str, sep = ". ")
 final_selected_row$Latin_name = Latin_name
-df2 = (final_selected_row %>% arrange(desc(rebio2020_100)))[c(1:8),]
+df2 = (final_selected_row %>% arrange(desc(rebio2022_100)))[c(1:8),]
 
 ################################################################################
 #### SLA
@@ -680,7 +680,7 @@ Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Pot_SLA_sqrt, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Pot_SLA_sqrt, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Pot_SLA_sqrt,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Hubei"), mapping = aes(x=Pot_SLA_sqrt, y=F0, color = Seed_source), size=1, linetype = 2) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Hubei"), mapping = aes(x=Pot_SLA_sqrt, y=F0, color = Seed_source), size=1, linetype = 1) +
@@ -691,7 +691,7 @@ ggplot(field_com_data_no, aes(x=Pot_SLA_sqrt, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  ggrepel::geom_text_repel(mapping = aes(x=Pot_SLA_sqrt,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  ggrepel::geom_text_repel(mapping = aes(x=Pot_SLA_sqrt,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
                            max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
@@ -714,7 +714,7 @@ Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Pot_Hmax_sqrt, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Pot_Hmax_sqrt, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Pot_Hmax_sqrt,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Guangdong"), mapping = aes(x=Pot_Hmax_sqrt, y=F0, color = Seed_source), size=1, linetype = 2) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Guangdong"), mapping = aes(x=Pot_Hmax_sqrt, y=F0, color = Seed_source), size=1, linetype = 1) +
@@ -725,7 +725,7 @@ ggplot(field_com_data_no, aes(x=Pot_Hmax_sqrt, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  ggrepel::geom_text_repel(mapping = aes(x=Pot_Hmax_sqrt,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  ggrepel::geom_text_repel(mapping = aes(x=Pot_Hmax_sqrt,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
                            max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
@@ -748,7 +748,7 @@ Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Pot_AGB_lg, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Pot_AGB_lg, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Pot_AGB_lg,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = field_com_data_no, mapping = aes(x=Pot_AGB_lg, y=F0, color = Seed_source), size=1, linetype = 2) +
   geom_line(data = field_com_data_all, mapping = aes(x=Pot_AGB_lg, y=F0), size=1.5, linetype = 2, color = "black") +
@@ -758,7 +758,7 @@ ggplot(field_com_data_no, aes(x=Pot_AGB_lg, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  ggrepel::geom_text_repel(mapping = aes(x=Pot_AGB_lg,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  ggrepel::geom_text_repel(mapping = aes(x=Pot_AGB_lg,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
                            max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
