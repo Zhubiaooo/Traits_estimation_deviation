@@ -4,23 +4,29 @@ DATA & FILE OVERVIEW
 
 In *Data* folder
 1)  iq_tree.treefile
-2)  Total_species_list.xlsx
-3)  Common_species_list.xlsx
-4)  Pot_traits_database.xlsx
-5)  Pot_traits_mean.xlsx
-6)  Field_traits_database(SLA).xlsx
-7)  Field_traits_database(Hmax&AGB).xlsx
-8)  Imputation_data_in_field.xlsx
-9)  Field_traits_mean.xlsx
-10) Survival_database_in_field.xlsx
-11) Field_composition_database.xlsx
+2)  Common_species_list.xlsx
+3)  Pot_traits_database0831.xlsx
+4)  Pot_traits_mean0831.xlsx
+5)  Field_traits_database0831_2.xlsx
+6)  Field_traits_mean0831_2.xlsx
+7)  all_row_data0829.xlsx
+8)  Imputation_data0831_2.xlsx
 
 In *Code* folder
-1)  Fig 1.R
-2)  Fig 2 & Fig 4 & Fig S2.R
-3)  Fig 3 & Fig S1 & Fig S3 & Fig S4.R
-4)  Imputation missing valus in field experiment.R
-
+1)  Fig 1-0831.R
+2)  Fig 2-0831.R
+3)  Fig 3 & Fig S9 & Fig S11-0831.R
+4)  Fig 4-0831.R
+5)  Fig 5-0831 & Fig S3-0831.R
+6)  Fig S1-0831.R
+7)  Fig S2-0831.R
+8)  Fig S4-0831.R
+9)  Fig S5-0831.R
+10)  Fig S6-0831.R
+11)  Fig S7-0831.R
+12)  Fig S8-0831.R
+13)  Fig S10-0831.R
+14)  Traits imputation.R
 
 #########################################################################
 
@@ -30,21 +36,9 @@ Description: Phylogenetic relationship of all experimental species in pot experi
 
 #########################################################################
 
-DATA-SPECIFIC INFORMATION FOR: Total_species_list.xlsx
-
-1. Number of variables: 4
-2. Number of cases/rows: 173
-3. Variable List:  
-    * Species: Latin name of species
-    * Species in KEW: Latin name of species based on Plants of the World Online 
-    * Origin: Geographical origin of species
-    * Lifeform: Lifeform of species
-
-#########################################################################
-
 DATA-SPECIFIC INFORMATION FOR: Common_species_list.xlsx
 
-1. Number of variables: 7
+1. Number of variables: 8
 2. Number of cases/rows: 65
 3. Variable List:
     * Species: Latin name of species
@@ -54,69 +48,77 @@ DATA-SPECIFIC INFORMATION FOR: Common_species_list.xlsx
     * Lifeform: Lifeform of species
     * Species_AGB: The list of species used in comparing Hmax and AGB under different types of experiments
     * Species_SLA: The list of species used in comparing SLA under different types of experiments
+    * Invasive: invasive vs. not invasive
 
 #########################################################################
 
-DATA-SPECIFIC INFORMATION FOR: Pot_traits_database.xlsx
+DATA-SPECIFIC INFORMATION FOR: Pot_traits_database0831.xlsx
 
-1. Number of variables: 9
-2. Number of cases/rows: 321
+1. Number of variables: 13
+2. Number of cases/rows: 320
 3. Variable List:
-    * Pots_num: Number of experimental pot
-    * Sp_code: Species number
-    * Repeats: Repetition number of experimental species
+    * species_num: Species number 
     * Species: Latin name of species
-    * Origin:  Geographical origin of species
-    * Lifeform: Lifeform of species
+    * Repeats: Repetition number of experimental species
+    * Pots_num: Number of experimental pot
     * SLA: Specific leaf area (cm2/g)
+    * Hmax_time1:  First measurement of plant height (cm)
+    * Hmax_time2:  Second measurement of plant height (cm)
     * Hmax:  Maximum height (cm)
     * AGB: Aboveground biomass (g)
+    * Origin:  Geographical origin of species
+    * Genus: Taxonomic level generic names
+    * Family: Taxonomic level family name
+    * Lifeform: Lifeform of species
 
 #########################################################################
 
-DATA-SPECIFIC INFORMATION FOR: Pot_traits_mean.xlsx
+DATA-SPECIFIC INFORMATION FOR: Pot_traits_mean0831.xlsx
 
 Several metrics obtained from the community information at each unique sampling event.
 
-1. Number of variables: 4
+1. Number of variables: 6
 2. Number of cases/rows: 65
 3. Variable List:
     * Species: Latin name of species
     * SLA: Specific leaf area (cm2/g)
+    * Hmax_time1:  First measurement of plant height (cm)
+    * Hmax_time2:  Second measurement of plant height (cm)
     * Hmax:  Maximum height (cm)
     * AGB: Aboveground biomass (g)
 
 #########################################################################
 
-DATA-SPECIFIC INFORMATION FOR: Field_traits_database(SLA).xlsx
+DATA-SPECIFIC INFORMATION FOR: Field_traits_database0831_2.xlsx
 
-1. Number of variables: 4
-2. Number of cases/rows: 254
+1. Number of variables: 7
+2. Number of cases/rows: 439
+3. Variable List:
+    * Block: Plot code of experimental 
+    * Species: Latin name of species
+    * Origin:  Geographical origin of species
+    * Lifeform: Lifeform of species
+    * SLA: Specific leaf area (cm2/g)
+    * Hmax:  Maximum height (cm)
+    * AGB: Aboveground biomass (g)
+
+#########################################################################
+
+DATA-SPECIFIC INFORMATION FOR: Field_traits_mean0831_2.xlsx
+
+1. Number of variables: 6
+2. Number of cases/rows: 65
 3. Variable List:
     * Species: Latin name of species
     * SLA: Specific leaf area (cm2/g)
+    * SLA_imp: Specific leaf area (cm2/g) inferred by missForest
+    * Hmax:  Maximum height (cm)
+    * AGB: Aboveground biomass (g)
     * Origin:  Geographical origin of species
-    * Lifeform: Lifeform of species
 
 #########################################################################
 
-DATA-SPECIFIC INFORMATION FOR: Field_traits_database(Hmax&AGB).xlsx
-
-1. Number of variables: 8
-2. Number of cases/rows: 405
-3. Variable List:
-    * Plot_num: Number of experimental plot
-    * Block: Number of experimental block
-    * Sp_num:  Species number
-    * Species: Latin name of species
-    * Field_Hmax:  Maximum height (cm)
-    * Field_AGB: Aboveground biomass (g)
-    * Origin:  Geographical origin of species
-    * Lifeform: Lifeform of species
-
-#########################################################################
-
-DATA-SPECIFIC INFORMATION FOR: Imputation_data_in_field.xlsx
+DATA-SPECIFIC INFORMATION FOR: Imputation_data0831_2.xlsx
 
 1. Number of variables: 4
 2. Number of cases/rows: 89
@@ -128,70 +130,78 @@ DATA-SPECIFIC INFORMATION FOR: Imputation_data_in_field.xlsx
 
 #########################################################################
 
-DATA-SPECIFIC INFORMATION FOR: Field_traits_mean.xlsx
-
-1. Number of variables: 5
-2. Number of cases/rows: 65
-3. Variable List:
-    * Species: Latin name of species
-    * SLA: Specific leaf area (cm2/g)
-    * SLA_imp: Specific leaf area (cm2/g) inferred by missForest
-    * Hmax:  Maximum height (cm)
-    * AGB: Aboveground biomass (g)
-
-#########################################################################
-
-DATA-SPECIFIC INFORMATION FOR: Survival_database_in_field.xlsx
-
-1. Number of variables: 4
-2. Number of cases/rows: 123
-3. Variable List:
-    * Species: Latin name of species
-    * Origin:  Geographical origin of species
-    * Lifeform: Lifeform of species
-    * Survival: Survival rate of species in the first year in field experiments
-
-#########################################################################
-
-DATA-SPECIFIC INFORMATION FOR: Field_composition_database.xlsx
+DATA-SPECIFIC INFORMATION FOR: all_row_data0829.xlsx
 
 1. Number of variables: 16
 2. Number of cases/rows: 405
 3. Variable List:
-    * Plot_num: Number of experimental plot
-    * Block: Number of experimental block
-    * Sp_num:  Species number
+    * Plot_num: Subplot code of field exp.
+    * Block: Plot code of field exp.
+    * Species_num:  Species number
     * Species: Latin name of species
-    * Field_SLA: Specific leaf area (cm2/g) measured in the field
-    * Field_SLA_imp: Specific leaf area (cm2/g) inferred by missForest measured in the field
-    * Field_Hmax:  Maximum height (cm) measured in the field
-    * Field_AGB: Aboveground biomass (g) measured in the field
-    * 2019_AGB: Total biomass of species in each sample plot in the first year of field experiment
-    * 2019_total: Total biomass of each plot in the first year of field experiment
-    * rebio2019: Relative biomass of each species in each plot in the first year of the field experiment
-    * 2020_AGB: Total biomass of species in each sample plot in the second year of field experiment
-    * 2020_total: Total biomass of each plot in the second  year of field experiment
-    * rebio2020: Relative biomass of each species in each plot in the second year of the field experiment
+    * Seed_source: Species population of field exp.
     * Origin:  Geographical origin of species
     * Lifeform: Lifeform of species
+    * rebio2021: Relative biomass of each species in each plot in the first year of the field experiment
+    * rebio2022: Relative biomass of each species in each plot in the second year of the field experiment
 
 #########################################################################
 
 
 CODE INFORMATION
 
-1)  Fig 1.R
+1)  Fig 1-0831.R
 
-This script contains all the data analysis and visualization code of Fig.1.
+This script contains all the data analysis and visualization code of Fig 1.
 
-2)  Fig 2 & Fig 4 & Fig S2.R
+2)  Fig 2-0831.R
 
-This script contains all the data analysis and visualization code of Fig 2 & Fig 4 & Fig S2.
+This script contains all the data analysis and visualization code of Fig 2.
 
-3)  Fig 3 & Fig S1 & Fig S3 & Fig S4.R
+3)  Fig 3 & Fig S9 & Fig S11-0831.R
 
-This script contains all the data analysis and visualization code of Fig 3 & Fig S1 & Fig S3 & Fig S4.
+This script contains all the data analysis and visualization code of Fig 3 & Fig S9 & Fig S11.
 
-4)  Imputation missing valus in field experiment.R
+4)  Fig 4-0831.R
+
+This script contains all the data analysis and visualization code of Fig 3 & Fig S9 & Fig S11.
+
+5)  Fig 5-0831 & Fig S3-0831.R
+
+This script contains all the data analysis and visualization code of Fig 5 $ Fig S3.
+
+6)  Fig S1-0831.R
+
+This script contains all the data analysis and visualization code of Fig S1.
+
+7)  Fig S2-0831.R
+
+This script contains all the data analysis and visualization code of Fig S2.
+
+8)  Fig S4-0831.R
+
+This script contains all the data analysis and visualization code of Fig S4.
+
+9)  Fig S5-0831.R
+
+This script contains all the data analysis and visualization code of Fig S5.
+
+10)  Fig S6-0831.R
+
+This script contains all the data analysis and visualization code of Fig S6.
+
+11)  Fig S7-0831.R
+
+This script contains all the data analysis and visualization code of Fig S7.
+
+12)  Fig S8-0831.R
+
+This script contains all the data analysis and visualization code of Fig S8.
+
+13)  Fig S10-0831.R
+
+This script contains all the data analysis and visualization code of Fig S10.
+
+14)  Traits imputation.R
 
 This script is used to interpolate and infer missing specific leaf area data from field experiments.
