@@ -118,11 +118,11 @@ head(field_com_data)
 ### Add uniqueness parameter
 field_com_data = field_com_data %>% left_join(All_total_dis2, by = "Species")
 colnames(field_com_data)
-field_com_data$rebio2020_100 = log10(field_com_data$rebio2020*100)
+field_com_data$rebio2022_100 = log10(field_com_data$rebio2022*100)
 field_com_data$Block = as.factor(field_com_data$Block)
 length(unique(field_com_data$Species))
 field_com_data$Seed_source <- factor(field_com_data$Seed_source, levels = rev(c("Guangdong","Guangxi","Hunan","Hubei","Henan","Shandong")))
-field_com_data$exist_prob <- ifelse(!is.na(field_com_data$rebio2020) & field_com_data$rebio2020 > 0, 1, 0)
+field_com_data$exist_prob <- ifelse(!is.na(field_com_data$rebio2022) & field_com_data$rebio2022 > 0, 1, 0)
 
 ##### Based on field measurement trait data
 ##### odds of persistence
@@ -160,11 +160,11 @@ Seed_source = unique(field_com_data$Seed_source)
 all_summary_lmer = NULL
 for (i in Seed_source) {
   select_data = subset(field_com_data, Seed_source == i) %>% tidyr::drop_na(rebio2020_100)
-  mod1 <- lmer(rebio2020_100 ~ All_pot_mean + (1|Block) , na.action=na.omit, data=select_data)
+  mod1 <- lmer(rebio2022_100 ~ All_pot_mean + (1|Block) , na.action=na.omit, data=select_data)
   mod1_summary = data.frame(Pop = i, Traits = "All_pot_mean", N = nrow(select_data), sp_num = length(unique(select_data$Species)),
                             Chisq = as.data.frame(Anova(mod1))[,1], p_value = as.data.frame(Anova(mod1))[,3],
                             R2m = r.squaredGLMM(mod1)[1,1], R2c = r.squaredGLMM(mod1)[1,2])
-  mod2 <- lmer(rebio2020_100 ~ All_Field_means + (1|Block) , na.action=na.omit, data=select_data)
+  mod2 <- lmer(rebio2022_100 ~ All_Field_means + (1|Block) , na.action=na.omit, data=select_data)
   mod2_summary = data.frame(Pop = i, Traits = "All_Field_means", N = nrow(select_data), sp_num = length(unique(select_data$Species)),
                             Chisq = as.data.frame(Anova(mod2))[,1], p_value = as.data.frame(Anova(mod2))[,3],
                             R2m = r.squaredGLMM(mod2)[1,1], R2c = r.squaredGLMM(mod2)[1,2])
@@ -173,10 +173,10 @@ for (i in Seed_source) {
 }
 all_summary_lmer$p_value = round(all_summary_lmer$p_value, 3)
 
-select_data = subset(field_com_data, Seed_source == "Guangdong") %>% tidyr::drop_na(rebio2020_100)
+select_data = subset(field_com_data, Seed_source == "Guangdong") %>% tidyr::drop_na(rebio2022_100)
 summary(select_data$All_Field_means)
-summary(select_data$rebio2020_100)
-mod1 <- lmer(rebio2020_100 ~ All_pot_mean + (1|Block) , na.action=na.omit, data=select_data)
+summary(select_data$rebio2022_100)
+mod1 <- lmer(rebio2022_100 ~ All_pot_mean + (1|Block) , na.action=na.omit, data=select_data)
 Anova(mod1)
 
 ##### Overall data analysis
@@ -184,11 +184,11 @@ colnames(field_com_data)
 select_data = field_com_data %>% tidyr::drop_na(rebio2020_100)
 nrow(select_data); length(unique(select_data$Species))
 
-mod1 = lmer(rebio2020_100 ~ All_pot_mean + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
-mod1 = lmer(rebio2020_100 ~ All_pot_mean + (1|Block/Plot_num) , data=select_data)
+mod1 = lmer(rebio2022_100 ~ All_pot_mean + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
+mod1 = lmer(rebio2022_100 ~ All_pot_mean + (1|Block/Plot_num) , data=select_data)
 Anova(mod1); r.squaredGLMM(mod1)[1,]
 
-mod2 = lmer(rebio2020_100 ~ All_Field_means + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
+mod2 = lmer(rebio2022_100 ~ All_Field_means + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
 Anova(mod2); r.squaredGLMM(mod2)[1,]
 
 
@@ -293,7 +293,7 @@ df2 = (final_selected_row %>% arrange(desc(rebio2020_100)))[c(1:8),]
 
 ################################################################################
 #### All_pot_mean
-mod12 <- lmer(rebio2020_100 ~ All_pot_mean*Seed_source + (1|Block), data = field_com_data_no)
+mod12 <- lmer(rebio2022_100 ~ All_pot_mean*Seed_source + (1|Block), data = field_com_data_no)
 summary(mod12)
 anova(mod12)
 MuMIn::r.squaredGLMM(mod12)
@@ -302,7 +302,7 @@ field_com_data_no$SE <- predictSE(mod12, field_com_data_no, level = 0)$se.fit
 
 ####
 field_com_data_all = field_com_data_no
-mod12 <- lmer(rebio2020_100 ~ All_pot_mean + (1|Block/Plot_num), data = field_com_data_all)
+mod12 <- lmer(rebio2022_100 ~ All_pot_mean + (1|Block/Plot_num), data = field_com_data_all)
 Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
@@ -330,7 +330,7 @@ ggplot(field_com_data_no, aes(x=All_pot_mean, y=rebio2020_100)) +
 
 
 #### All_Field_means
-mod12 <- lmer(rebio2020_100 ~ All_Field_means*Seed_source + (1|Block), data = field_com_data_no)
+mod12 <- lmer(rebio2022_100 ~ All_Field_means*Seed_source + (1|Block), data = field_com_data_no)
 summary(mod12)
 anova(mod12)
 MuMIn::r.squaredGLMM(mod12)
@@ -339,7 +339,7 @@ field_com_data_no$SE <- predictSE(mod12, field_com_data_no, level = 0)$se.fit
 
 ####
 field_com_data_all = field_com_data_no
-mod12 <- lmer(rebio2020_100 ~ All_Field_means + (1|Block/Plot_num), data = field_com_data_all)
+mod12 <- lmer(rebio2022_100 ~ All_Field_means + (1|Block/Plot_num), data = field_com_data_all)
 Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
