@@ -8,20 +8,20 @@ library(ggplot2)
 field_com_data = read.xlsx("Data/all_row_data0829.xlsx", sheet = "field_data_mean", rowNames = F, colNames = T)
 head(field_com_data)
 dim(field_com_data)
-#### 移除多年生植物数据
+#### Remove perennial plant data
 field_com_data = subset(field_com_data, Lifeform == "Annual")
-### 读入田间性状均值
+### Read in the mean of field experimental traits
 Field_trait = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 colnames(Field_trait) <- paste0( "Field_", colnames(Field_trait))
 colnames(Field_trait)[1] <- "Species"
 
-### 读入盆栽性状均值
+### Read in the mean of pot experimental traits
 Pot_trait = read.xlsx("Data/Pot_traits_mean0831.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
 colnames(Pot_trait) <- paste0("Pot_", colnames(Pot_trait))
 colnames(Pot_trait)[1] <- "Species"
 nrow(Pot_trait)
 
-### 添加性状值
+### add traits mean
 field_com_data = field_com_data %>% left_join(Field_trait[,c(1:5)], by = "Species") %>%
   left_join(Pot_trait, by = "Species")
 colnames(field_com_data)
@@ -30,7 +30,7 @@ field_com_data$Block = as.factor(field_com_data$Block)
 length(unique(field_com_data$Species))
 field_com_data$Seed_source <- factor(field_com_data$Seed_source, levels = rev(c("Guangdong","Guangxi","Hunan","Hubei","Henan","Shandong")))
 
-#### 性状数据转换
+#### data translation
 field_com_data$Field_SLA_imp_sqrt = sqrt(field_com_data$Field_SLA_imp)
 field_com_data$Field_Hmax_sqrt = sqrt(field_com_data$Field_Hmax)
 field_com_data$Field_AGB_lg = log10(field_com_data$Field_AGB)
@@ -41,8 +41,8 @@ field_com_data$Pot_AGB_lg = log10(field_com_data$Pot_AGB)
 ##
 field_com_data$exist_prob <- ifelse(!is.na(field_com_data$rebio2020) & field_com_data$rebio2020 > 0, 1, 0)
 
-###### 整体数据分析
-### 植物来源对持续存在概率以及相对发生量的影响
+###### Overall data analysis
+### Effects of plant origin on persistence probability and relative occurrence
 colnames(field_com_data)
 mod1 = lmer(rebio2020_100 ~ Origin + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
 Anova(mod1); r.squaredGLMM(mod1)[1,]
@@ -82,7 +82,6 @@ prop.test(c(75, 135), c(75+324, 135+348))  #Persistence
 prop.test(c(324, 348), c(75+324, 135+348))  #Disappear
 
 ################################################################################
-##### 基于田间测量性状数据
 ##### odds of persistence
 Seed_source = unique(field_com_data$Seed_source)
 all_summary_glmer = NULL
@@ -105,7 +104,7 @@ for (i in Seed_source) {
   all_summary_glmer = rbind(all_summary_glmer, Total_summary)
 }
 
-##### 田间整体数据分析（群落组成作为协变量）
+#####
 colnames(field_com_data)
 mod1 = glmer(exist_prob ~ Field_SLA_imp_sqrt + (1|Block/Plot_num), na.action=na.omit, family=binomial, data=field_com_data)
 summary(mod1)
@@ -160,8 +159,7 @@ nrow(select_data); length(unique(select_data$Species))
 #Anova(mod3); r.squaredGLMM(mod3)[1,]
 
 ################################################################################
-#### 盆栽实验性状
-##### 基于盆栽测量性状数据
+##### Based on pot experiment to measure trait data
 ##### odds of persistence
 Seed_source = unique(field_com_data$Seed_source)
 all_summary_glmer = NULL
@@ -185,7 +183,7 @@ for (i in Seed_source) {
 }
 all_summary_glmer$R2m = round(all_summary_glmer$R2m, 3)
 
-##### 盆栽整体数据分析（群落组成作为协变量）
+##### 
 colnames(field_com_data)
 mod1 = glmer(exist_prob ~ Plant_com + Pot_SLA_sqrt + (1|Block/Plot_num) , na.action=na.omit, family=binomial, data=field_com_data)
 Anova(mod1); r.squaredGLMM(mod1)[1,]
@@ -220,7 +218,7 @@ for (i in Seed_source) {
 }
 all_summary_lmer$R2m = round(all_summary_lmer$R2m, 3)
 
-##### 整体数据分析（群落组成作为协变量）
+##### 
 colnames(field_com_data)
 mod1 = lmer(rebio2020_100 ~ Plant_com + Pot_SLA_sqrt + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
 Anova(mod1); r.squaredGLMM(mod1)[1,]
@@ -236,7 +234,7 @@ nrow(select_data); length(unique(select_data$Species))
 
 
 ################################################################################
-######### 可视化 (田间实验)
+######### Visualization (field experiment)
 length(unique(field_com_data$Species))
 unique(field_com_data$Seed_source)
 
@@ -349,7 +347,6 @@ final_selected_row = NULL
 for (i in sp) {
   data_sub = subset(field_com_data_no, Species == i)
   max_index <- which.max(data_sub$rebio2020)
-  # 然后，使用这个索引来选择对应的行
   selected_row <- data_sub[max_index, ]
   final_selected_row = rbind(final_selected_row, selected_row)
 }
@@ -470,7 +467,7 @@ ggplot(field_com_data_no, aes(x=Field_AGB_lg, y=rebio2020_100)) +
 (p1|p2|p3)/(p4|p5|p6) -> Fig_S5; Fig_S5
 
 ################################################################################
-######### 可视化 (盆栽实验)
+######### Visualization (pot experiment)
 length(unique(field_com_data$Species))
 unique(field_com_data$Seed_source)
 
@@ -590,7 +587,6 @@ final_selected_row = NULL
 for (i in sp) {
   data_sub = subset(field_com_data_no, Species == i)
   max_index <- which.max(data_sub$rebio2020)
-  # 然后，使用这个索引来选择对应的行
   selected_row <- data_sub[max_index, ]
   final_selected_row = rbind(final_selected_row, selected_row)
 }
@@ -706,3 +702,5 @@ ggplot(field_com_data_no, aes(x=Pot_AGB_lg, y=rebio2020_100)) +
 library(patchwork)
 (p1|p2|p3)/(p4|p5|p6) -> Fig_S11; Fig_S11
 
+### Notice that,
+### For more picture details, we have further adjusted it in Adobe illustrator.
