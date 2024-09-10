@@ -181,7 +181,7 @@ Anova(mod1)
 
 ##### Overall data analysis
 colnames(field_com_data)
-select_data = field_com_data %>% tidyr::drop_na(rebio2020_100)
+select_data = field_com_data %>% tidyr::drop_na(rebio2022_100)
 nrow(select_data); length(unique(select_data$Species))
 
 mod1 = lmer(rebio2022_100 ~ All_pot_mean + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
@@ -271,7 +271,7 @@ ggplot(field_com_data, aes(x=(All_Field_means), y=exist_prob)) +
 ################################################################################
 unique(field_com_data$Seed_source)
 field_com_data$Seed_source = as.factor(field_com_data$Seed_source)
-field_com_data_no = field_com_data %>% tidyr::drop_na(rebio2020_100)
+field_com_data_no = field_com_data %>% tidyr::drop_na(rebio2022_100)
 unique(field_com_data_no$Species)
 
 ################################################################################
@@ -279,7 +279,7 @@ sp = unique(field_com_data_no$Species)
 final_selected_row = NULL
 for (i in sp) {
   data_sub = subset(field_com_data_no, Species == i)
-  max_index <- which.max(data_sub$rebio2020)
+  max_index <- which.max(data_sub$rebio2022)
   selected_row <- data_sub[max_index, ]
   final_selected_row = rbind(final_selected_row, selected_row)
 }
@@ -289,7 +289,7 @@ first_char <- substr(final_selected_row$Species, 1, 1)
 sub_str <- gsub(".*_", "", final_selected_row$Species)
 Latin_name <- paste(first_char, sub_str, sep = ". ")
 final_selected_row$Latin_name = Latin_name
-df2 = (final_selected_row %>% arrange(desc(rebio2020_100)))[c(1:8),]
+df2 = (final_selected_row %>% arrange(desc(rebio2022_100)))[c(1:8),]
 
 ################################################################################
 #### All_pot_mean
@@ -307,7 +307,7 @@ Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=All_pot_mean, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=All_pot_mean, y=rebio2022_100)) +
   #geom_ribbon(aes(x=All_pot_mean,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Guangxi" & Seed_source != "Henan" & Seed_source != "Shandong"), mapping = aes(x=All_pot_mean, y=F0, color = Seed_source), size=1, linetype = 1) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Guangxi"), mapping = aes(x=All_pot_mean, y=F0, color = Seed_source), size=1, linetype = 2) +
@@ -320,7 +320,7 @@ ggplot(field_com_data_no, aes(x=All_pot_mean, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  #ggrepel::geom_text_repel(mapping = aes(x=All_pot_mean,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  #ggrepel::geom_text_repel(mapping = aes(x=All_pot_mean,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
   #                         max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
@@ -344,7 +344,7 @@ Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=All_Field_means, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=All_Field_means, y=rebio2022_100)) +
   #geom_ribbon(aes(x=All_Field_means,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Guangdong" & Seed_source != "Henan"), mapping = aes(x=All_Field_means, y=F0, color = Seed_source), size=1, linetype = 1) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Guangdong"), mapping = aes(x=All_Field_means, y=F0, color = Seed_source), size=1, linetype = 2) +
@@ -356,7 +356,7 @@ ggplot(field_com_data_no, aes(x=All_Field_means, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  #ggrepel::geom_text_repel(mapping = aes(x=All_Field_means,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  #ggrepel::geom_text_repel(mapping = aes(x=All_Field_means,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
   #                         max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
