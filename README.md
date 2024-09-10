@@ -3,7 +3,7 @@ The following files allow one to reproduce analyses in the manuscript entitled "
 DATA & FILE OVERVIEW
 
 In *Data* folder
-1)  All_species.newick
+1)  iq_tree.treefile
 2)  Total_species_list.xlsx
 3)  Common_species_list.xlsx
 4)  Pot_traits_database.xlsx
@@ -24,9 +24,9 @@ In *Code* folder
 
 #########################################################################
 
-DATA-SPECIFIC INFORMATION FOR: All_species.newick
+DATA-SPECIFIC INFORMATION FOR: iq_tree.treefile
 
-Description: Phylogenetic relationship of all experimental species in pot experiment and field experiment (N = 172)
+Description: Phylogenetic relationship of all experimental species in pot experiment and field experiment
 
 #########################################################################
 
