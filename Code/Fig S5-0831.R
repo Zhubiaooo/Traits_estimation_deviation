@@ -25,7 +25,7 @@ nrow(Pot_trait)
 field_com_data = field_com_data %>% left_join(Field_trait[,c(1:5)], by = "Species") %>%
   left_join(Pot_trait, by = "Species")
 colnames(field_com_data)
-field_com_data$rebio2020_100 = log10(field_com_data$rebio2020*100)
+field_com_data$rebio2022_100 = log10(field_com_data$rebio2022*100)
 field_com_data$Block = as.factor(field_com_data$Block)
 length(unique(field_com_data$Species))
 field_com_data$Seed_source <- factor(field_com_data$Seed_source, levels = rev(c("Guangdong","Guangxi","Hunan","Hubei","Henan","Shandong")))
@@ -39,12 +39,12 @@ field_com_data$Pot_SLA_sqrt = sqrt(field_com_data$Pot_SLA)
 field_com_data$Pot_Hmax_sqrt = sqrt(field_com_data$Pot_Hmax)
 field_com_data$Pot_AGB_lg = log10(field_com_data$Pot_AGB)
 ##
-field_com_data$exist_prob <- ifelse(!is.na(field_com_data$rebio2020) & field_com_data$rebio2020 > 0, 1, 0)
+field_com_data$exist_prob <- ifelse(!is.na(field_com_data$rebio2022) & field_com_data$rebio2022 > 0, 1, 0)
 
 ###### Overall data analysis
 ### Effects of plant origin on persistence probability and relative occurrence
 colnames(field_com_data)
-mod1 = lmer(rebio2020_100 ~ Origin + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
+mod1 = lmer(rebio2022_100 ~ Origin + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
 Anova(mod1); r.squaredGLMM(mod1)[1,]
 emmeans::emmeans(mod1, specs = pairwise ~ Origin, type = 'response', adjust = 'none')
 
@@ -124,15 +124,15 @@ Seed_source = unique(field_com_data$Seed_source)
 all_summary_lmer = NULL
 for (i in Seed_source) {
   select_data = subset(field_com_data, Seed_source == i) %>% tidyr::drop_na(rebio2020_100)
-  mod1 <- lmer(rebio2020_100 ~ Field_SLA_imp_sqrt + (1|Block) , na.action=na.omit, data=select_data)
+  mod1 <- lmer(rebio2022_100 ~ Field_SLA_imp_sqrt + (1|Block) , na.action=na.omit, data=select_data)
   mod1_summary = data.frame(Pop = i, Traits = "SLA", N = nrow(select_data), sp_num = length(unique(select_data$Species)),
                             Chisq = as.data.frame(Anova(mod1))[,1], p_value = as.data.frame(Anova(mod1))[,3],
                             R2m = r.squaredGLMM(mod1)[1,1], R2c = r.squaredGLMM(mod1)[1,2])
-  mod2 <- lmer(rebio2020_100 ~ Field_Hmax_sqrt + (1|Block) , na.action=na.omit, data=select_data)
+  mod2 <- lmer(rebio2022_100 ~ Field_Hmax_sqrt + (1|Block) , na.action=na.omit, data=select_data)
   mod2_summary = data.frame(Pop = i, Traits = "Hmax", N = nrow(select_data), sp_num = length(unique(select_data$Species)),
                             Chisq = as.data.frame(Anova(mod2))[,1], p_value = as.data.frame(Anova(mod2))[,3],
                             R2m = r.squaredGLMM(mod2)[1,1], R2c = r.squaredGLMM(mod2)[1,2])
-  mod3 <- lmer(rebio2020_100 ~ Field_AGB_lg + (1|Block) , na.action=na.omit, data=select_data)
+  mod3 <- lmer(rebio2022_100 ~ Field_AGB_lg + (1|Block) , na.action=na.omit, data=select_data)
   car::Anova(mod3)
   mod3_summary = data.frame(Pop = i, Traits = "AGB", N = nrow(select_data), sp_num = length(unique(select_data$Species)),
                             Chisq = as.data.frame(Anova(mod3))[,1], p_value = as.data.frame(Anova(mod3))[,3],
@@ -143,19 +143,19 @@ for (i in Seed_source) {
 all_summary_lmer$p_value = round(all_summary_lmer$p_value, 3)
 ################################################################################
 colnames(field_com_data)
-mod1 = lmer(rebio2020_100 ~ Field_SLA_imp_sqrt + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
+mod1 = lmer(rebio2022_100 ~ Field_SLA_imp_sqrt + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
 Anova(mod1); r.squaredGLMM(mod1)[1,]
 summary(mod1)
-mod2 = lmer(rebio2020_100 ~ Field_Hmax_sqrt + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
+mod2 = lmer(rebio2022_100 ~ Field_Hmax_sqrt + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
 Anova(mod2); r.squaredGLMM(mod2)[1,]
 
-mod3 = lmer(rebio2020_100 ~ Field_AGB_lg + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
+mod3 = lmer(rebio2022_100 ~ Field_AGB_lg + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
 Anova(mod3); r.squaredGLMM(mod3)[1,]
 
 select_data = field_com_data %>% tidyr::drop_na(rebio2020_100)
 nrow(select_data); length(unique(select_data$Species))
 
-#mod3 = lmer(rebio2020_100 ~ Field_AGB_lg + (1|Block) , na.action=na.omit, data=subset(select_data, Seed_source == "Hubei"))
+#mod3 = lmer(rebio2022_100 ~ Field_AGB_lg + (1|Block) , na.action=na.omit, data=subset(select_data, Seed_source == "Hubei"))
 #Anova(mod3); r.squaredGLMM(mod3)[1,]
 
 ################################################################################
@@ -201,15 +201,15 @@ Seed_source = unique(field_com_data$Seed_source)
 all_summary_lmer = NULL
 for (i in Seed_source) {
   select_data = subset(field_com_data, Seed_source == i) %>% tidyr::drop_na(rebio2020_100)
-  mod1 <- lmer(rebio2020_100 ~ Pot_SLA_sqrt + (1|Block) , na.action=na.omit, data=select_data)
+  mod1 <- lmer(rebio2022_100 ~ Pot_SLA_sqrt + (1|Block) , na.action=na.omit, data=select_data)
   mod1_summary = data.frame(Pop = i, Traits = "SLA", N = nrow(select_data), sp_num = length(unique(select_data$Species)),
                             Chisq = as.data.frame(Anova(mod1))[,1], p_value = as.data.frame(Anova(mod1))[,3],
                             R2m = r.squaredGLMM(mod1)[1,1], R2c = r.squaredGLMM(mod1)[1,2])
-  mod2 <- lmer(rebio2020_100 ~ Pot_Hmax_sqrt + (1|Block) , na.action=na.omit, data=select_data)
+  mod2 <- lmer(rebio2022_100 ~ Pot_Hmax_sqrt + (1|Block) , na.action=na.omit, data=select_data)
   mod2_summary = data.frame(Pop = i, Traits = "Hmax", N = nrow(select_data), sp_num = length(unique(select_data$Species)),
                             Chisq = as.data.frame(Anova(mod2))[,1], p_value = as.data.frame(Anova(mod2))[,3],
                             R2m = r.squaredGLMM(mod2)[1,1], R2c = r.squaredGLMM(mod2)[1,2])
-  mod3 <- lmer(rebio2020_100 ~ Pot_AGB_lg + (1|Block) , na.action=na.omit, data=select_data)
+  mod3 <- lmer(rebio2022_100 ~ Pot_AGB_lg + (1|Block) , na.action=na.omit, data=select_data)
   mod3_summary = data.frame(Pop = i, Traits = "AGB", N = nrow(select_data), sp_num = length(unique(select_data$Species)),
                             Chisq = as.data.frame(Anova(mod3))[,1], p_value = as.data.frame(Anova(mod3))[,3],
                             R2m = r.squaredGLMM(mod3)[1,1], R2c = r.squaredGLMM(mod3)[1,2])
@@ -220,13 +220,13 @@ all_summary_lmer$R2m = round(all_summary_lmer$R2m, 3)
 
 ##### 
 colnames(field_com_data)
-mod1 = lmer(rebio2020_100 ~ Plant_com + Pot_SLA_sqrt + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
+mod1 = lmer(rebio2022_100 ~ Plant_com + Pot_SLA_sqrt + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
 Anova(mod1); r.squaredGLMM(mod1)[1,]
 
-mod2 = lmer(rebio2020_100 ~ Plant_com + Pot_Hmax_sqrt + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
+mod2 = lmer(rebio2022_100 ~ Plant_com + Pot_Hmax_sqrt + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
 Anova(mod2); r.squaredGLMM(mod2)[1,]
 
-mod3 = lmer(rebio2020_100 ~ Plant_com + Pot_AGB_lg + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
+mod3 = lmer(rebio2022_100 ~ Plant_com + Pot_AGB_lg + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
 Anova(mod3); r.squaredGLMM(mod3)[1,]
 
 select_data = field_com_data %>% tidyr::drop_na(rebio2020_100)
@@ -338,7 +338,7 @@ ggplot(field_com_data, aes(x= Field_AGB_lg, y=exist_prob)) +
 ################################################################################
 unique(field_com_data$Seed_source)
 field_com_data$Seed_source = as.factor(field_com_data$Seed_source)
-field_com_data_no = field_com_data %>% tidyr::drop_na(rebio2020_100)
+field_com_data_no = field_com_data %>% tidyr::drop_na(rebio2022_100)
 unique(field_com_data_no$Species)
 
 ################################################################################
@@ -346,7 +346,7 @@ sp = unique(field_com_data_no$Species)
 final_selected_row = NULL
 for (i in sp) {
   data_sub = subset(field_com_data_no, Species == i)
-  max_index <- which.max(data_sub$rebio2020)
+  max_index <- which.max(data_sub$rebio2022)
   selected_row <- data_sub[max_index, ]
   final_selected_row = rbind(final_selected_row, selected_row)
 }
@@ -356,11 +356,11 @@ first_char <- substr(final_selected_row$Species, 1, 1)
 sub_str <- gsub(".*_", "", final_selected_row$Species)
 Latin_name <- paste(first_char, sub_str, sep = ". ")
 final_selected_row$Latin_name = Latin_name
-df2 = (final_selected_row %>% arrange(desc(rebio2020_100)))[c(1:8),]
+df2 = (final_selected_row %>% arrange(desc(rebio2022_100)))[c(1:8),]
 
 ################################################################################
 #### SLA
-mod12 <- lmer(rebio2020_100 ~ Field_SLA_imp_sqrt*Seed_source + (1|Block), data = field_com_data_no)
+mod12 <- lmer(rebio2022_100 ~ Field_SLA_imp_sqrt*Seed_source + (1|Block), data = field_com_data_no)
 summary(mod12)
 anova(mod12)
 MuMIn::r.squaredGLMM(mod12)
@@ -369,12 +369,12 @@ field_com_data_no$SE <- predictSE(mod12, field_com_data_no, level = 0)$se.fit
 
 ####
 field_com_data_all = field_com_data_no
-mod12 <- lmer(rebio2020_100 ~ Field_SLA_imp_sqrt + (1|Block/Plot_num), data = field_com_data_all)
+mod12 <- lmer(rebio2022_100 ~ Field_SLA_imp_sqrt + (1|Block/Plot_num), data = field_com_data_all)
 Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Field_SLA_imp_sqrt, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Field_SLA_imp_sqrt, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Field_SLA_imp_sqrt,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Hunan"  & Seed_source != "Shandong" & Seed_source != "Hubei"), mapping = aes(x=Field_SLA_imp_sqrt, y=F0, color = Seed_source), size=1, linetype = 1) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Hunan"), mapping = aes(x=Field_SLA_imp_sqrt, y=F0, color = Seed_source), size=1, linetype = 2) +
@@ -387,7 +387,7 @@ ggplot(field_com_data_no, aes(x=Field_SLA_imp_sqrt, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  ggrepel::geom_text_repel(mapping = aes(x=Field_SLA_imp_sqrt,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  ggrepel::geom_text_repel(mapping = aes(x=Field_SLA_imp_sqrt,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
                            max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
@@ -396,7 +396,7 @@ ggplot(field_com_data_no, aes(x=Field_SLA_imp_sqrt, y=rebio2020_100)) +
 
 
 #### Hmax
-mod12 <- lmer(rebio2020_100 ~ Field_Hmax_sqrt*Seed_source + (1|Block), data = field_com_data_no)
+mod12 <- lmer(rebio2022_100 ~ Field_Hmax_sqrt*Seed_source + (1|Block), data = field_com_data_no)
 summary(mod12)
 anova(mod12)
 MuMIn::r.squaredGLMM(mod12)
@@ -405,12 +405,12 @@ field_com_data_no$SE <- predictSE(mod12, field_com_data_no, level = 0)$se.fit
 
 ####
 field_com_data_all = field_com_data_no
-mod12 <- lmer(rebio2020_100 ~ Field_Hmax_sqrt + (1|Block/Plot_num), data = field_com_data_all)
+mod12 <- lmer(rebio2022_100 ~ Field_Hmax_sqrt + (1|Block/Plot_num), data = field_com_data_all)
 Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Field_Hmax_sqrt, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Field_Hmax_sqrt, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Field_Hmax_sqrt,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Guangdong"), mapping = aes(x=Field_Hmax_sqrt, y=F0, color = Seed_source), size=1, linetype = 1) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Guangdong"), mapping = aes(x=Field_Hmax_sqrt, y=F0, color = Seed_source), size=1, linetype = 2) +
@@ -421,7 +421,7 @@ ggplot(field_com_data_no, aes(x=Field_Hmax_sqrt, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  ggrepel::geom_text_repel(mapping = aes(x=Field_Hmax_sqrt,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  ggrepel::geom_text_repel(mapping = aes(x=Field_Hmax_sqrt,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
                            max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
@@ -430,7 +430,7 @@ ggplot(field_com_data_no, aes(x=Field_Hmax_sqrt, y=rebio2020_100)) +
 
 
 #### AGB
-mod12 <- lmer(rebio2020_100 ~ Field_AGB_lg*Seed_source + (1|Block), data = field_com_data_no)
+mod12 <- lmer(rebio2022_100 ~ Field_AGB_lg*Seed_source + (1|Block), data = field_com_data_no)
 summary(mod12)
 anova(mod12)
 MuMIn::r.squaredGLMM(mod12)
@@ -439,12 +439,12 @@ field_com_data_no$SE <- predictSE(mod12, field_com_data_no, level = 0)$se.fit
 
 ####
 field_com_data_all = field_com_data_no
-mod12 <- lmer(rebio2020_100 ~ Field_AGB_lg + (1|Block/Plot_num), data = field_com_data_all)
+mod12 <- lmer(rebio2022_100 ~ Field_AGB_lg + (1|Block/Plot_num), data = field_com_data_all)
 Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Field_AGB_lg, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Field_AGB_lg, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Field_AGB_lg,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Guangdong" & Seed_source != "Shandong"), mapping = aes(x=Field_AGB_lg, y=F0, color = Seed_source), size=1, linetype = 1) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Guangdong"), mapping = aes(x=Field_AGB_lg, y=F0, color = Seed_source), size=1, linetype = 2) +
@@ -456,7 +456,7 @@ ggplot(field_com_data_no, aes(x=Field_AGB_lg, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  ggrepel::geom_text_repel(mapping = aes(x=Field_AGB_lg,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  ggrepel::geom_text_repel(mapping = aes(x=Field_AGB_lg,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
                            max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
@@ -586,7 +586,7 @@ sp = unique(field_com_data_no$Species)
 final_selected_row = NULL
 for (i in sp) {
   data_sub = subset(field_com_data_no, Species == i)
-  max_index <- which.max(data_sub$rebio2020)
+  max_index <- which.max(data_sub$rebio2022)
   selected_row <- data_sub[max_index, ]
   final_selected_row = rbind(final_selected_row, selected_row)
 }
@@ -596,7 +596,7 @@ first_char <- substr(final_selected_row$Species, 1, 1)
 sub_str <- gsub(".*_", "", final_selected_row$Species)
 Latin_name <- paste(first_char, sub_str, sep = ". ")
 final_selected_row$Latin_name = Latin_name
-df2 = (final_selected_row %>% arrange(desc(rebio2020_100)))[c(1:8),]
+df2 = (final_selected_row %>% arrange(desc(rebio2022_100)))[c(1:8),]
 
 ################################################################################
 #### SLA
@@ -609,12 +609,12 @@ field_com_data_no$SE <- predictSE(mod12, field_com_data_no, level = 0)$se.fit
 
 ####
 field_com_data_all = field_com_data_no
-mod12 <- lmer(rebio2020_100 ~ Pot_SLA_sqrt + (1|Block/Plot_num), data = field_com_data_all)
+mod12 <- lmer(rebio2022_100 ~ Pot_SLA_sqrt + (1|Block/Plot_num), data = field_com_data_all)
 Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Pot_SLA_sqrt, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Pot_SLA_sqrt, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Pot_SLA_sqrt,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Hubei"), mapping = aes(x=Pot_SLA_sqrt, y=F0, color = Seed_source), size=1, linetype = 2) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Hubei"), mapping = aes(x=Pot_SLA_sqrt, y=F0, color = Seed_source), size=1, linetype = 1) +
@@ -625,7 +625,7 @@ ggplot(field_com_data_no, aes(x=Pot_SLA_sqrt, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  ggrepel::geom_text_repel(mapping = aes(x=Pot_SLA_sqrt,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  ggrepel::geom_text_repel(mapping = aes(x=Pot_SLA_sqrt,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
                            max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
@@ -634,7 +634,7 @@ ggplot(field_com_data_no, aes(x=Pot_SLA_sqrt, y=rebio2020_100)) +
 
 
 #### Hmax
-mod12 <- lmer(rebio2020_100 ~ Pot_Hmax_sqrt*Seed_source + (1|Block), data = field_com_data_no)
+mod12 <- lmer(rebio2022_100 ~ Pot_Hmax_sqrt*Seed_source + (1|Block), data = field_com_data_no)
 summary(mod12)
 anova(mod12)
 MuMIn::r.squaredGLMM(mod12)
@@ -643,12 +643,12 @@ field_com_data_no$SE <- predictSE(mod12, field_com_data_no, level = 0)$se.fit
 
 ####
 field_com_data_all = field_com_data_no
-mod12 <- lmer(rebio2020_100 ~ Pot_Hmax_sqrt + (1|Block/Plot_num), data = field_com_data_all)
+mod12 <- lmer(rebio2022_100 ~ Pot_Hmax_sqrt + (1|Block/Plot_num), data = field_com_data_all)
 Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Pot_Hmax_sqrt, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Pot_Hmax_sqrt, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Pot_Hmax_sqrt,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = subset(field_com_data_no, Seed_source != "Guangdong"), mapping = aes(x=Pot_Hmax_sqrt, y=F0, color = Seed_source), size=1, linetype = 2) +
   geom_line(data = subset(field_com_data_no, Seed_source == "Guangdong"), mapping = aes(x=Pot_Hmax_sqrt, y=F0, color = Seed_source), size=1, linetype = 1) +
@@ -659,7 +659,7 @@ ggplot(field_com_data_no, aes(x=Pot_Hmax_sqrt, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  ggrepel::geom_text_repel(mapping = aes(x=Pot_Hmax_sqrt,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  ggrepel::geom_text_repel(mapping = aes(x=Pot_Hmax_sqrt,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
                            max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
@@ -668,7 +668,7 @@ ggplot(field_com_data_no, aes(x=Pot_Hmax_sqrt, y=rebio2020_100)) +
 
 
 #### AGB
-mod12 <- lmer(rebio2020_100 ~ Pot_AGB_lg*Seed_source + (1|Block), data = field_com_data_no)
+mod12 <- lmer(rebio2022_100 ~ Pot_AGB_lg*Seed_source + (1|Block), data = field_com_data_no)
 summary(mod12)
 anova(mod12)
 MuMIn::r.squaredGLMM(mod12)
@@ -677,12 +677,12 @@ field_com_data_no$SE <- predictSE(mod12, field_com_data_no, level = 0)$se.fit
 
 ####
 field_com_data_all = field_com_data_no
-mod12 <- lmer(rebio2020_100 ~ Pot_AGB_lg + (1|Block/Plot_num), data = field_com_data_all)
+mod12 <- lmer(rebio2022_100 ~ Pot_AGB_lg + (1|Block/Plot_num), data = field_com_data_all)
 Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
 
-ggplot(field_com_data_no, aes(x=Pot_AGB_lg, y=rebio2020_100)) +
+ggplot(field_com_data_no, aes(x=Pot_AGB_lg, y=rebio2022_100)) +
   #geom_ribbon(aes(x=Pot_AGB_lg,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = Seed_source), alpha = I(0.1)) +
   geom_line(data = field_com_data_no, mapping = aes(x=Pot_AGB_lg, y=F0, color = Seed_source), size=1, linetype = 2) +
   geom_line(data = field_com_data_all, mapping = aes(x=Pot_AGB_lg, y=F0), size=1.5, linetype = 2, color = "black") +
@@ -692,7 +692,7 @@ ggplot(field_com_data_no, aes(x=Pot_AGB_lg, y=rebio2020_100)) +
                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
   scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
                               "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  ggrepel::geom_text_repel(mapping = aes(x=Pot_AGB_lg,y=rebio2020_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
+  ggrepel::geom_text_repel(mapping = aes(x=Pot_AGB_lg,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
                            max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
