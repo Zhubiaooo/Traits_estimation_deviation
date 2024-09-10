@@ -159,7 +159,7 @@ nrow(field_com_data); length(unique(field_com_data$Species))
 Seed_source = unique(field_com_data$Seed_source)
 all_summary_lmer = NULL
 for (i in Seed_source) {
-  select_data = subset(field_com_data, Seed_source == i) %>% tidyr::drop_na(rebio2020_100)
+  select_data = subset(field_com_data, Seed_source == i) %>% tidyr::drop_na(rebio2022_100)
   mod1 <- lmer(rebio2022_100 ~ All_pot_mean + (1|Block) , na.action=na.omit, data=select_data)
   mod1_summary = data.frame(Pop = i, Traits = "All_pot_mean", N = nrow(select_data), sp_num = length(unique(select_data$Species)),
                             Chisq = as.data.frame(Anova(mod1))[,1], p_value = as.data.frame(Anova(mod1))[,3],
