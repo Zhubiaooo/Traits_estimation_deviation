@@ -22,15 +22,15 @@ mytheme = theme_bw()+
 
 Field_traits <- read.xlsx("Data/Imputation_data0831_2.xlsx",sheet = "Imputation_data", rowNames = FALSE, colNames = TRUE)
 rownames(Field_traits) = Field_traits$Species
-### Analyzing species lists (SLA = 49, Hmax&AGB = 64)
+### Analyzing species lists (SLA = 48, Hmax&AGB = 64)
 Common_sp_list = read.xlsx("Data/Common_species_list.xlsx", sheet = "Common_sp_list", colNames = TRUE, rowNames = FALSE)
 Common_sp_list_SLA = c(na.omit(Common_sp_list$Species_SLA))
 Common_sp_list_AGB = c(na.omit(Common_sp_list$Species_AGB))
 Field_traits <- Field_traits[Field_traits$Species %in% Common_sp_list_AGB, ]
+unique(Field_traits$Species)
 
 head(Field_traits)
 summary(Field_traits)
-### N = 88 (Species)
 phylogenyAux <- read.tree("Data/iq_tree.treefile")
 to_drop = setdiff(as.vector(phylogenyAux$tip.label),as.vector((Field_traits$Species)))
 phy_tree <- drop.tip(as.phylo(phylogenyAux), to_drop) 
