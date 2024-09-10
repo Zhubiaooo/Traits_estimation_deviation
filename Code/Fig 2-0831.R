@@ -565,3 +565,6 @@ p_all
 library(cowplot)
 plot_grid(p1,p2,p3,p_all,
           labels = c('(a)', '(b)', '(c)', '(d)'))
+
+### Notice that,
+### For more picture details, we have further adjusted it in Adobe illustrator.
