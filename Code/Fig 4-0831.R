@@ -115,7 +115,7 @@ library(ggplot2)
 field_com_data = read.xlsx("Data/all_row_data0829.xlsx", sheet = "field_data_mean", rowNames = F, colNames = T)
 head(field_com_data)
 
-### 添加独特性参数
+### Add uniqueness parameter
 field_com_data = field_com_data %>% left_join(All_total_dis2, by = "Species")
 colnames(field_com_data)
 field_com_data$rebio2020_100 = log10(field_com_data$rebio2020*100)
@@ -124,7 +124,7 @@ length(unique(field_com_data$Species))
 field_com_data$Seed_source <- factor(field_com_data$Seed_source, levels = rev(c("Guangdong","Guangxi","Hunan","Hubei","Henan","Shandong")))
 field_com_data$exist_prob <- ifelse(!is.na(field_com_data$rebio2020) & field_com_data$rebio2020 > 0, 1, 0)
 
-##### 基于田间测量性状数据
+##### Based on field measurement trait data
 ##### odds of persistence
 Seed_source = unique(field_com_data$Seed_source)
 all_summary_glmer = NULL
@@ -143,7 +143,7 @@ for (i in Seed_source) {
 }
 all_summary_glmer$R2m = round(all_summary_glmer$R2m, 3)
 
-##### 田间整体数据分析
+##### Overall field data analysis
 colnames(field_com_data)
 mod1 = glmer(exist_prob ~ All_pot_mean + (1|Block/Plot_num) , na.action=na.omit, family=binomial, data=field_com_data)
 Anova(mod1); r.squaredGLMM(mod1)[1,]
@@ -179,7 +179,7 @@ summary(select_data$rebio2020_100)
 mod1 <- lmer(rebio2020_100 ~ All_pot_mean + (1|Block) , na.action=na.omit, data=select_data)
 Anova(mod1)
 
-##### 整体数据分析
+##### Overall data analysis
 colnames(field_com_data)
 select_data = field_com_data %>% tidyr::drop_na(rebio2020_100)
 nrow(select_data); length(unique(select_data$Species))
@@ -193,7 +193,7 @@ Anova(mod2); r.squaredGLMM(mod2)[1,]
 
 
 ################################################################################
-######### 可视化
+######### Visualization
 length(unique(field_com_data$Species))
 unique(field_com_data$Seed_source)
 
@@ -280,7 +280,6 @@ final_selected_row = NULL
 for (i in sp) {
   data_sub = subset(field_com_data_no, Species == i)
   max_index <- which.max(data_sub$rebio2020)
-  # 然后，使用这个索引来选择对应的行
   selected_row <- data_sub[max_index, ]
   final_selected_row = rbind(final_selected_row, selected_row)
 }
