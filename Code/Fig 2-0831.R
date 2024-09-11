@@ -181,7 +181,7 @@ p1 = ggplot()+
   scale_color_manual(values=c('#60A7A6','#FEA6A6'))+
   scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
   guides(col = guide_legend(ncol = 1))+
-  geom_abline(intercept=-0.2491622, slope=1.9362560, size=1, linetype = 2)+
+  geom_abline(intercept=-0.1589007, slope=1.5577529, size=1, linetype = 2)+
   geom_abline(intercept=0,slope=1 ,size=1, linetype = 1, color = "#8B0000")+
   scale_x_continuous(labels = scales::label_comma(accuracy =0.01), limits = c(0.13,0.68)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01), limits = c(0.13,0.68)) + 
@@ -306,7 +306,7 @@ p2 = ggplot()+
   scale_color_manual(values=c('#60A7A6','#FEA6A6'))+
   scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
   guides(col = guide_legend(ncol = 1))+
-  geom_abline(intercept=-0.002572897, slope=0.942572166, size=1, linetype = 2)+
+  geom_abline(intercept=-0.002267806, slope=0.941337257, size=1, linetype = 2)+
   geom_abline(intercept=0,slope=1 ,size=1, linetype = 1, color = "#8B0000")+
   mytheme + 
   scale_x_continuous(labels = scales::label_comma(accuracy =0.01), limits = c(0.16,0.65))+
@@ -430,7 +430,7 @@ p3 = ggplot()+
   scale_color_manual(values=c('#60A7A6','#FEA6A6'))+
   scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
   geom_abline(intercept=0,slope=1 ,size=1, linetype = 1, color = "#8B0000")+
-  geom_abline(intercept=0.1470295,slope=0.4722208 ,size=1, linetype = 2)+
+  geom_abline(intercept=0.1471211,slope=0.4719499 ,size=1, linetype = 2)+
   mytheme + 
   scale_x_continuous(labels = scales::label_comma(accuracy =0.01), limits = c(0.16,0.67))+
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01), limits = c(0.16,0.67))
@@ -550,7 +550,7 @@ p_all = ggplot()+
   scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
   guides(col = guide_legend(ncol = 1))+
   geom_abline(intercept=0,slope=1 ,size=1, linetype = 1, color = "#8B0000")+
-  geom_abline(intercept=0.05936268 ,slope=0.85993392,size=1, linetype = 1)+
+  geom_abline(intercept=0.0605427 ,slope=0.8563063,size=1, linetype = 1)+
   mytheme + 
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01), limits = c(0.2, 0.65))+
   scale_x_continuous(labels = scales::label_comma(accuracy =0.01), limits = c(0.2, 0.65))
