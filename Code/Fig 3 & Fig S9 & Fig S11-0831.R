@@ -328,7 +328,7 @@ field_com_data$SE <- predictSE(mod12, field_com_data, level = 0)$se.fit
 
 ####
 field_com_data_all = field_com_data
-mod12 <- glmer(exist_prob ~ Field_SLA_imp_sqrt + (1|Block) , na.action=na.omit, family=binomial, data=field_com_data_all)
+mod12 <- glmer(exist_prob ~ Field_SLA_imp_sqrt + (1|Block/Plot_num) , na.action=na.omit, family=binomial, data=field_com_data_all)
 Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
@@ -585,7 +585,7 @@ ggplot(field_com_data, aes(x=Pot_SLA_sqrt, y=exist_prob)) +
 
 ################################################################################
 #### Hmax
-mod12 <- glmer(exist_prob ~ Pot_Hmax_sqrt*Seed_source + (1|Block/Plot_num) , na.action=na.omit, family=binomial, data=field_com_data)
+mod12 <- glmer(exist_prob ~ Pot_Hmax_sqrt*Seed_source + (1|Block) , na.action=na.omit, family=binomial, data=field_com_data)
 Anova(mod12)
 summary(mod12)
 MuMIn::r.squaredGLMM(mod12)
@@ -595,7 +595,7 @@ field_com_data$SE <- predictSE(mod12, field_com_data, level = 0)$se.fit
 
 ####
 field_com_data_all = field_com_data
-mod12 <- glmer(exist_prob ~ Pot_Hmax_sqrt + (1|Block) , na.action=na.omit, family=binomial, data=field_com_data_all)
+mod12 <- glmer(exist_prob ~ Pot_Hmax_sqrt + (1|Block/Plot_num) , na.action=na.omit, family=binomial, data=field_com_data_all)
 Anova(mod12)
 field_com_data_all$F0 = predictSE(mod12, field_com_data_all, level = 0)$fit
 field_com_data_all$SE <- predictSE(mod12, field_com_data_all, level = 0)$se.fit
