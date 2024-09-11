@@ -700,7 +700,7 @@ ggplot(field_com_data_no, aes(x=Pot_AGB_lg, y=rebio2022_100)) +
   mytheme -> p6; p6
 
 library(patchwork)
-(p1|p2|p3)/(p4|p5|p6) -> Fig_S11; Fig_S11
+(p1|p2|p3)/(p4|p5|p6) -> Fig_S5; Fig_S5
 
 ### Notice that,
 ### For more picture details, we have further adjusted it in Adobe illustrator.
