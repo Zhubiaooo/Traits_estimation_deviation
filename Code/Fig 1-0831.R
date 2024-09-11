@@ -39,6 +39,21 @@ p.tree2 <- ggtree(tree,branch.length = "none",size = 0.4, color = "black") +
 p.tree2
 ggtree::rotate(p.tree2,node = 65) -> p.tree3 ;p.tree3
 
+tree_df_raw <- fortify(tree)
+tree_df_raw$label <- str_replace_all(tree_df_raw$label, "_", " ")
+tree_df <- full_join(tree_df_raw, dat[,c(-2)], by = c("label" = "Species"))
+tree_df$Origin <- factor(tree_df$Origin, levels = c("Native","Exotic"))
+
+###
+ordater.species.replacement <- setNames(dat$Family, nm = dat$Species)
+tree_df2 <- tree_df |>
+  mutate(label = str_replace_all(label, "_", " "),order = case_when(
+    isTip ~ recode(label, !!!ordater.species.replacement), TRUE ~ ""))
+
+## Maximum time span
+max.geo.time <- max(tree_df2$x, na.rm = TRUE)
+max.geo.time
+
 ###
 right.df <- tree_df2[c(1:65),] |> 
   summarise(y1 = min(y), y2 = max(y), y = mean(y),.by = order) |> 
