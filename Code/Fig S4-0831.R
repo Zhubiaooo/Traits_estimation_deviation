@@ -203,7 +203,7 @@ p2 = ggplot()+
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1), limits = c(0.15,0.69)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.1), limits = c(0.15,0.69)) + 
   guides(col = guide_legend(ncol = 1))+
-  geom_abline(intercept=0.04873259, slope=0.80692740 ,size=1, linetype = 2)+
+  geom_abline(intercept=0.04950864, slope=0.81094810 ,size=1, linetype = 2)+
   geom_abline(intercept=0,slope=1 ,size=1, linetype = 1, color = "#95373B")+
   mytheme + 
   #annotate('text',x = 3,y=1,label=('Slope = 0.06054834 , \n95% CI [-55.23847, 55.35957]'),size=4,color='black')+
