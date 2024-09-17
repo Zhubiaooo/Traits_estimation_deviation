@@ -1,6 +1,4 @@
-The following files allow one to reproduce analyses in the manuscript entitled "Traits estimated when grown alone may underestimate competitive advantage and invasiveness of exotic species" by Biao Zhu & Wei Chen.
-
-[![DOI](https://zenodo.org/badge/DOI/10.1111/ddi.13455.svg)](https://doi.org/10.1111/ddi.13455)
+The following files allow one to reproduce analyses in the manuscript entitled "Traits estimated when grown alone may underestimate competitive advantage and invasiveness of exotic species" by Biao Zhu & Wei Chen.[![DOI](https://zenodo.org/badge/DOI/10.1111/nph.20160.svg)](https://doi.org/10.1111/nph.20160)
 
 DATA & FILE OVERVIEW
 
