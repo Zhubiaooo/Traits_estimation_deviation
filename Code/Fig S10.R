@@ -5,16 +5,16 @@ library(MuMIn)
 library(car)
 library(AICcmodavg)
 library(ggplot2)
-field_com_data = read.xlsx("Data/all_row_data0829.xlsx", sheet = "field_data_mean", rowNames = F, colNames = T)
+field_com_data = read.xlsx("Data/all_row_data.xlsx", sheet = "field_data_mean", rowNames = F, colNames = T)
 head(field_com_data)
-
+dim(field_com_data)
 ### 
-Field_trait = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
+Field_trait = read.xlsx("Data/Field_traits_mean.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 colnames(Field_trait) <- paste0( "Field_", colnames(Field_trait))
 colnames(Field_trait)[1] <- "Species"
 
 ### 
-Pot_trait = read.xlsx("Data/Pot_traits_mean0831.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
+Pot_trait = read.xlsx("Data/Pot_traits_mean.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
 colnames(Pot_trait) <- paste0("Pot_", colnames(Pot_trait))
 colnames(Pot_trait)[1] <- "Species"
 nrow(Pot_trait)
@@ -55,6 +55,7 @@ for (i in Seed_source) {
   all_summary_glmer = rbind(all_summary_glmer, mod2_summary)
 }
 all_summary_glmer$R2m = round(all_summary_glmer$R2m, 3)
+all_summary_glmer$p_value = round(all_summary_glmer$p_value, 3)
 
 ##### 
 mod2 = glmer(exist_prob ~ Pot_Hmax_time1_sqrt + (1|Block/Plot_num) , na.action=na.omit, family=binomial, data=field_com_data)
@@ -66,7 +67,7 @@ nrow(field_com_data); length(unique(field_com_data$Species))
 Seed_source = unique(field_com_data$Seed_source)
 all_summary_lmer = NULL
 for (i in Seed_source) {
-  select_data = subset(field_com_data, Seed_source == i) %>% tidyr::drop_na(rebio2020_100)
+  select_data = subset(field_com_data, Seed_source == i) %>% tidyr::drop_na(rebio2022_100)
   mod2 <- lmer(rebio2022_100 ~ Pot_Hmax_time1_sqrt + (1|Block) , na.action=na.omit, data=select_data)
   mod2_summary = data.frame(Pop = i, Traits = "Hmax", N = nrow(select_data), sp_num = length(unique(select_data$Species)),
                             Chisq = as.data.frame(Anova(mod2))[,1], p_value = as.data.frame(Anova(mod2))[,3],
@@ -74,6 +75,7 @@ for (i in Seed_source) {
   all_summary_lmer = rbind(all_summary_lmer, mod2_summary)
 }
 all_summary_lmer$R2m = round(all_summary_lmer$R2m, 3)
+all_summary_lmer$p_value = round(all_summary_lmer$p_value, 3)
 ##### 
 str(select_data)
 mod2 = lmer(rebio2022_100 ~ Pot_Hmax_time1_sqrt + (1|Block/Plot_num), data=subset(field_com_data, rebio2022_100 != "NA"))
@@ -111,10 +113,10 @@ ggplot(field_com_data, aes(x=(Pot_Hmax_time1_sqrt), y=exist_prob)) +
   geom_point(aes(fill = Seed_source),size = 2.2, pch = 21) + # fill = "#00000022", color = "#0A0A0A"
   labs(x = 'Maximum height estimated\nin first time of pot experiment',y = 'Odds of persistence',title = NULL) +  
   mytheme + theme(legend.position = "none") + 
-  scale_fill_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                             "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
+  scale_fill_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                             "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
+  scale_color_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                              "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) -> p2; p2
 
@@ -164,10 +166,10 @@ ggplot(field_com_data_no, aes(x=Pot_Hmax_time1_sqrt, y=rebio2022_100)) +
   geom_line(data = field_com_data_all, mapping = aes(x=Pot_Hmax_time1_sqrt, y=F0), size=1.5, linetype = 1, color = "black") +
   geom_ribbon(data = field_com_data_all, mapping = aes(x=Pot_Hmax_time1_sqrt, ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = "#EBEBEB"), alpha = I(0.1)) +
   geom_point(aes(fill = Seed_source),size = 2.2, color = "black", pch = 21) + # fill = "#00000022", color = "#0A0A0A"
-  scale_fill_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                             "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
+  scale_fill_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                             "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
+  scale_color_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                              "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
   ggrepel::geom_text_repel(mapping = aes(x=Pot_Hmax_time1_sqrt,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
                            max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
