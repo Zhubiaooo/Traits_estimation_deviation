@@ -1,13 +1,13 @@
 ################################################################################
 ### Loading pot experiment database 
-pot_trait = read.xlsx("Data/Pot_traits_mean0831.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
+pot_trait = read.xlsx("Data/Pot_traits_mean.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
 pot_trait = subset(pot_trait, SLA != "NA")
 colnames(pot_trait) <- paste0(colnames(pot_trait), "_pot")
 colnames(pot_trait)[1] <- "Species"
 #rownames(pot_trait) <- pot_trait$Species
 
 ### Loading Field experiment database 
-field_trait = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
+field_trait = read.xlsx("Data/Field_traits_mean.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 #field_trait = subset(field_trait, SLA != "NA")
 colnames(field_trait) <- paste0(colnames(field_trait), "_field")
 colnames(field_trait)[1] <- "Species"
