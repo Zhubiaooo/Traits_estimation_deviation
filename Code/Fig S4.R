@@ -25,14 +25,14 @@ library(car)
 ### Sensitivity analysis
 ### Traits deviation estimation
 ### Loading pot experiment database
-pot_trait = read.xlsx("Data/Pot_traits_mean0831.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
+pot_trait = read.xlsx("Data/Pot_traits_mean.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
 colnames(pot_trait) <- paste0(colnames(pot_trait), "_green")
 colnames(pot_trait)[1] <- "Species"
 pot_trait = pot_trait[pot_trait$Species %in% unique(Common_sp_list_SLA), ]
 unique(pot_trait$Species)
 
 ### Loading field experiment database
-trait_data = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Field_traits_mean.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 colnames(trait_data) <- paste0(colnames(trait_data), "_field")
 colnames(trait_data)[1] <- "Species"
 trait_data = trait_data[trait_data$Species %in% unique(Common_sp_list_SLA), ]
@@ -57,8 +57,8 @@ p1 = ggplot(trait_data, mapping = aes(x = sqrt(SLA_green) , y = sqrt(SLA_field))
   geom_smooth(data = trait_data, mapping = aes(x=sqrt(SLA_green),y=sqrt(SLA_field)),method = "lm", se = T, color = "black", fill = "grey80", linetype = 1) + 
   geom_point(trait_data, mapping = aes(x = sqrt(SLA_green) , y = sqrt(SLA_field), shape = Origin, fill = Origin),size=2.2, color = "black")+
   scale_shape_manual(values = c(21,21))+
-  scale_color_manual(values=c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values=c('#005097','#FDB435'))+
+  scale_fill_manual(values=c('#005097','#FDB435'))+
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.1)) + 
   labs(x = 'Specific leaf area (cm2/g, sqrt) \nestimated in pot experiment',
@@ -78,7 +78,7 @@ p1
 library(funrar)
 standr = function(x){(x-min(x))/(max(x)-min(x))} 
 r2 <- function(x) {x$`Sum Sq`[1]/ (x$`Sum Sq`[1] + x$`Sum Sq`[2])}
-trait_data = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Field_traits_mean.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 colnames(trait_data) <- paste0(colnames(trait_data), "_field")
 colnames(trait_data)[1] <- "Species"
 
@@ -198,8 +198,8 @@ p2 = ggplot()+
   geom_errorbarh(data = dattt,mapping = aes(y = SLA_field_mean,xmax=SLA_green_mean+pot_se,xmin=SLA_green_mean-pot_se),height=0.01,size=0.5,alpha = 1, color = "black")+#
   geom_point(data = dattt,mapping = aes(x = SLA_green_mean, y = SLA_field_mean,fill = Origin, color = Origin),size=3.8, pch = 21, color = "black")+
   scale_shape_manual(values = c(21,21))+
-  scale_color_manual(values=c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values=c('#005097','#FDB435'))+
+  scale_fill_manual(values=c('#005097','#FDB435'))+
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1), limits = c(0.15,0.69)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.1), limits = c(0.15,0.69)) + 
   guides(col = guide_legend(ncol = 1))+
@@ -221,16 +221,16 @@ library(MuMIn)
 library(car)
 library(AICcmodavg)
 library(ggplot2)
-field_com_data = read.xlsx("Data/all_row_data0829.xlsx", sheet = "field_data_mean", rowNames = F, colNames = T)
+field_com_data = read.xlsx("Data/all_row_data.xlsx", sheet = "field_data_mean", rowNames = F, colNames = T)
 head(field_com_data)
 
 ### 
-Field_trait = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
+Field_trait = read.xlsx("Data/Field_traits_mean.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 colnames(Field_trait) <- paste0( "Field_", colnames(Field_trait))
 colnames(Field_trait)[1] <- "Species"
 
 ### 
-Pot_trait = read.xlsx("Data/Pot_traits_mean0831.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
+Pot_trait = read.xlsx("Data/Pot_traits_mean.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
 colnames(Pot_trait) <- paste0("Pot_", colnames(Pot_trait))
 colnames(Pot_trait)[1] <- "Species"
 nrow(Pot_trait)
@@ -332,12 +332,12 @@ ggplot(field_com_data, aes(x=Field_SLA_sqrt, y=exist_prob)) +
   geom_line(data = field_com_data_all, mapping = aes(x=Field_SLA_sqrt, y=F0), size=1.5, linetype = 1, color = "black") +
   geom_ribbon(data = field_com_data_all, mapping = aes(x=Field_SLA_sqrt, ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = "#EBEBEB"), alpha = I(0.1)) +
   geom_point(aes(fill = Seed_source),size = 2.2, pch = 21) + 
-  labs(x = "Specific leaf area (cm2/g, log10)\n in field experiment", y = 'Odds of persistence', title = NULL) +
+  labs(x = "Specific leaf area (cm2/g, log10)\nestimated in field experiment", y = 'Odds of persistence', title = NULL) +
   mytheme + theme(legend.position = "none") + 
-  scale_fill_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                             "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
+  scale_fill_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                             "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
+  scale_color_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                              "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01))-> p3; p3
 
@@ -391,15 +391,15 @@ ggplot(field_com_data_no, aes(x=Field_SLA_sqrt, y=rebio2022_100)) +
   geom_line(data = field_com_data_all, mapping = aes(x=Field_SLA_sqrt, y=F0), size=1.5, linetype = 2, color = "black") +
   geom_ribbon(data = field_com_data_all, mapping = aes(x=Field_SLA_sqrt, ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = "#EBEBEB"), alpha = I(0.1)) +
   geom_point(aes(fill = Seed_source),size = 2.2, color = "black", pch = 21) + # fill = "#00000022", color = "#0A0A0A"
-  scale_fill_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                             "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
+  scale_fill_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                             "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
+  scale_color_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                              "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
   ggrepel::geom_text_repel(mapping = aes(x=Field_SLA_sqrt,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
                            max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) +
-  labs(x = "Specific leaf area (cm2/g, log10)\n in field experiment",y = 'Relative abundance within the \n plot in second year (%, log10)',title = NULL) +
+  labs(x = "Specific leaf area (cm2/g, log10)\nestimated in field experiment",y = 'Relative abundance within the \n plot in second year (%, log10)',title = NULL) +
   mytheme -> p4; p4 
 
 (p1+p2)/(p3+p4)
