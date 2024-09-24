@@ -55,7 +55,7 @@ DATA-SPECIFIC INFORMATION FOR: Common_species_list.xlsx
 DATA-SPECIFIC INFORMATION FOR: Pot_traits_database.xlsx
 
 1. Number of variables: 13
-2. Number of cases/rows: 521
+2. Number of cases/rows: 321
 3. Variable List:
     * species_num: Species number 
     * Species: Latin name of species
