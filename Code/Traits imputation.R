@@ -20,7 +20,7 @@ mytheme = theme_bw()+
          axis.title.y=element_text(colour='black', size=13,vjust = 1),
          axis.text=element_text(colour='black',size=11))
 
-Field_traits <- read.xlsx("Data/Imputation_data0831_2.xlsx",sheet = "Imputation_data", rowNames = FALSE, colNames = TRUE)
+Field_traits <- read.xlsx("Data/Imputation_data.xlsx",sheet = "Imputation_data", rowNames = FALSE, colNames = TRUE)
 rownames(Field_traits) = Field_traits$Species
 ### Analyzing species lists (SLA = 48, Hmax&AGB = 64)
 Common_sp_list = read.xlsx("Data/Common_species_list.xlsx", sheet = "Common_sp_list", colNames = TRUE, rowNames = FALSE)
@@ -77,7 +77,7 @@ colnames(trait.imp)[3] = "Field_SLA_imp"
 
 
 ################################################################################
-Field_traits <- read.xlsx("Data/Imputation_data0831_2.xlsx",sheet = "Imputation_data", rowNames = FALSE, colNames = TRUE)
+Field_traits <- read.xlsx("Data/Imputation_data.xlsx",sheet = "Imputation_data", rowNames = FALSE, colNames = TRUE)
 rownames(Field_traits) = Field_traits$Species
 Field_traits <- Field_traits %>% drop_na(SLA); nrow(Field_traits)
 
