@@ -13,7 +13,7 @@ Common_sp_list_SLA = c(na.omit(Common_sp_list$Species_SLA))
 Common_sp_list_AGB = c(na.omit(Common_sp_list$Species_AGB))
 ###
 
-trait_data_total <- read.xlsx("Data/all_row_data.xlsx", sheet = "field_data_mean2", rowNames = F, colNames = T)
+trait_data_total <- read.xlsx("Data/all_row_data.xlsx", sheet = "field_data_mean", rowNames = F, colNames = T)
 trait_data_total <- trait_data_total[trait_data_total$Species %in% Common_sp_list_AGB, ]
 unique(trait_data_total$Species)
 
