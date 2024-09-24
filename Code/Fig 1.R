@@ -14,7 +14,7 @@ library(patchwork)
 ### Loading tree file
 tree = read.tree("Data/iq_tree.treefile")
 
-mf.clrs <- c('#FEA6A6','#60A7A6')
+mf.clrs <- c('#005097','#FDB435')
 ### Read additional data, including families, genera, species, etc.
 dat <- read.xlsx("Data/Common_species_list.xlsx", sheet = "Common_sp_list", colNames = T, rowNames = F)
 head(dat)
@@ -163,7 +163,7 @@ phyloMat = phyloMat / max(phyloMat)
 dim(phyloMat)
 
 ### Specific leaf area of common species in pot experiment
-trait_data <- read.xlsx("Data/Pot_traits_database0831.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
+trait_data <- read.xlsx("Data/Pot_traits_database.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
 trait_data <- trait_data[trait_data$Species %in% unique(Common_sp_list_SLA), ]
 trait_data <- trait_data %>% drop_na(SLA)
 length(unique(trait_data$Species))
@@ -182,7 +182,7 @@ shapiro.test(residuals(mod))
 tuk_quasipoisson <- glht(mod, alternative = 'two.sided', linfct = mcp(Origin = 'Tukey'))
 summary(tuk_quasipoisson) 
 tuk_quasipoisson.cld <- cld(tuk_quasipoisson, level = 0.05, decreasing = TRUE)
-plot(tuk_quasipoisson.cld, col = c('#60A7A6','#FEA6A6'))
+plot(tuk_quasipoisson.cld, col = c('#005097','#FDB435'))
 
 ###Percentage increase
 summarySE(trait_data, measurevar = c("SLA"), groupvars = c("Origin"))
@@ -201,7 +201,7 @@ Physignal
 plot(Physignal)
 
 ###Maximum height of common species in pot experiment
-trait_data <- read.xlsx("Data/Pot_traits_database0831.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
+trait_data <- read.xlsx("Data/Pot_traits_database.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
 trait_data <- trait_data[trait_data$Species %in% unique(Common_sp_list_AGB), ]
 trait_data <- trait_data %>% drop_na(Hmax)
 length(unique(trait_data$Species))
@@ -220,7 +220,7 @@ hist(residuals(mod))
 tuk_quasipoisson <- glht(mod, alternative = 'two.sided', linfct = mcp(Origin = 'Tukey'))
 summary(tuk_quasipoisson) 
 tuk_quasipoisson.cld <- cld(tuk_quasipoisson, level = 0.05, decreasing = TRUE)
-plot(tuk_quasipoisson.cld, col = c('#60A7A6','#FEA6A6'))
+plot(tuk_quasipoisson.cld, col = c('#005097','#FDB435'))
 
 ###Percentage increase
 summarySE(trait_data, measurevar = c("Hmax"), groupvars = c("Origin"))
@@ -237,7 +237,7 @@ Physignal
 plot(Physignal)
 
 ####Aboveground biomass of common species in pot experiment
-trait_data <- read.xlsx("Data/Pot_traits_database0831.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
+trait_data <- read.xlsx("Data/Pot_traits_database.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
 trait_data <- trait_data[trait_data$Species %in% unique(Common_sp_list_AGB), ]
 trait_data <- trait_data %>% tidyr::drop_na(AGB)
 length(unique(trait_data$Species))
@@ -256,7 +256,7 @@ hist(residuals(mod))
 tuk_quasipoisson <- glht(mod, alternative = 'two.sided', linfct = mcp(Origin = 'Tukey'))
 summary(tuk_quasipoisson) 
 tuk_quasipoisson.cld <- cld(tuk_quasipoisson, level = 0.05, decreasing = TRUE)
-plot(tuk_quasipoisson.cld, col = c('#60A7A6','#FEA6A6'))
+plot(tuk_quasipoisson.cld, col = c('#005097','#FDB435'))
 
 ###Percentage increase
 summarySE(trait_data, measurevar = c("AGB"), groupvars = c("Origin"))
@@ -273,7 +273,7 @@ Physignal
 plot(Physignal)
 
 ###Specific leaf area of common species in field experiment
-trait_data <- read.xlsx("Data/Field_traits_database0831_2.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
+trait_data <- read.xlsx("Data/Field_traits_database.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
 trait_data <- trait_data[trait_data$Species %in% unique(Common_sp_list_SLA), ]
 trait_data <- trait_data %>% drop_na(SLA)
 length(unique(trait_data$Species))
@@ -293,7 +293,7 @@ shapiro.test(residuals(mod))
 tuk_quasipoisson <- glht(mod, alternative = 'two.sided', linfct = mcp(Origin = 'Tukey'))
 summary(tuk_quasipoisson) 
 tuk_quasipoisson.cld = cld(tuk_quasipoisson, level = 0.05, decreasing = TRUE)
-plot(tuk_quasipoisson.cld, col = c('#60A7A6','#FEA6A6'))
+plot(tuk_quasipoisson.cld, col = c('#005097','#FDB435'))
 
 ###Percentage increase
 summarySE(trait_data, measurevar = c("SLA"), groupvars = c("Origin"))
@@ -310,7 +310,7 @@ Physignal
 plot(Physignal)
 
 ###Maximum height of common species in field garden experiment
-trait_data <- read.xlsx("Data/Field_traits_database0831_2.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
+trait_data <- read.xlsx("Data/Field_traits_database.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
 trait_data <- trait_data[trait_data$Species %in% unique(Common_sp_list_AGB), ]
 trait_data <- trait_data %>% drop_na(AGB)
 length(unique(trait_data$Species))
@@ -331,7 +331,7 @@ shapiro.test(residuals(mod))
 tuk_quasipoisson <- glht(mod, alternative = 'two.sided', linfct = mcp(Origin = 'Tukey'))
 summary(tuk_quasipoisson) 
 tuk_quasipoisson.cld <- cld(tuk_quasipoisson, level = 0.05, decreasing = TRUE)
-plot(tuk_quasipoisson.cld, col = c('#60A7A6','#FEA6A6'))
+plot(tuk_quasipoisson.cld, col = c('#005097','#FDB435'))
 
 ###Percentage increase
 summarySE(trait_data, measurevar = c("Hmax"), groupvars = c("Origin"))
@@ -348,7 +348,7 @@ Physignal
 plot(Physignal)
 
 ###Aboveground biomass of common species in field experiment
-trait_data <- read.xlsx("Data/Field_traits_database0831_2.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
+trait_data <- read.xlsx("Data/Field_traits_database.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
 trait_data <- trait_data[trait_data$Species %in% unique(Common_sp_list_AGB), ]
 trait_data <- trait_data %>% tidyr::drop_na(AGB)
 length(unique(trait_data$Species))
@@ -370,7 +370,7 @@ hist(residuals(mod))
 tuk_quasipoisson <- glht(mod, alternative = 'two.sided', linfct = mcp(Origin = 'Tukey'))
 summary(tuk_quasipoisson) 
 tuk_quasipoisson.cld <- cld(tuk_quasipoisson, level = 0.05, decreasing = TRUE)
-plot(tuk_quasipoisson.cld, col = c('#60A7A6','#FEA6A6'))
+plot(tuk_quasipoisson.cld, col = c('#005097','#FDB435'))
 
 ### Percentage increase
 Rmisc::summarySE(trait_data, measurevar = c("AGB"), groupvars = c("Origin"))
@@ -401,8 +401,9 @@ mytheme = theme_classic()+
   theme(plot.title = element_text(color = "black", size = 13, hjust = 0.5))
 
 ### Pot experiment
+mf.clrs <- c('#005097','#FDB435')
 ### SLA
-trait_data = read.xlsx("Data/Pot_traits_database0831.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Pot_traits_database.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
 trait_data = trait_data[trait_data$Species %in% unique(Common_sp_list_SLA), ]
 trait_data = trait_data %>% drop_na(SLA)
 trait_data$Origin=factor(trait_data$Origin, levels = c("Native","Exotic"))
@@ -416,8 +417,8 @@ p1 = ggplot(trait_data,aes(x=Origin,y=SLA))+
                position = position_dodge(0.5),width=0.15,outlier.size=0.8,outlier.shape = 1)+
   stat_summary(data=trait_data, aes(y=SLA,x=Origin),fill="white",color="black",
                fun="mean",position = position_dodge(0.5),geom="point",shape=21, size=1.5)+
-  scale_color_manual(values = c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values = c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values = mf.clrs)+
+  scale_fill_manual(values = mf.clrs)+
   mytheme +
   labs(x = NULL, y = expression('Specific leaf area (cm'^ 2*'/g, sqrt)'),  title = NULL) + 
   scale_y_continuous(position = "left",labels = scales::label_comma(accuracy =1), limits = c(8,26))+
@@ -427,7 +428,7 @@ p1 = ggplot(trait_data,aes(x=Origin,y=SLA))+
 
 ###
 ### Hmax
-trait_data = read.xlsx("Data/Pot_traits_database0831.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Pot_traits_database.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
 trait_data = trait_data[trait_data$Species %in% unique(Common_sp_list_AGB), ]
 trait_data = trait_data %>% drop_na(Hmax)
 length(unique(trait_data$Species))
@@ -441,8 +442,8 @@ p2 = ggplot(trait_data,aes(x=Origin,y=Hmax))+
                position = position_dodge(0.5),width=0.15,outlier.size=0.8,outlier.shape = 1)+
   stat_summary(data=trait_data, aes(y=Hmax,x=Origin),fill="white",color="black",
                fun="mean",position = position_dodge(0.5),geom="point",shape=21, size=1.5)+
-  scale_color_manual(values = c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values = c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values = mf.clrs)+
+  scale_fill_manual(values = mf.clrs)+
   mytheme+
   labs(x = NULL, y = 'Maximum height (cm, sqrt)' ,title = NULL) + 
   #scale_y_continuous(position = "right",labels = scales::label_comma(accuracy =1), 
@@ -453,7 +454,7 @@ p2 = ggplot(trait_data,aes(x=Origin,y=Hmax))+
 
 
 ### AGB
-trait_data = read.xlsx("Data/Pot_traits_database0831.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Pot_traits_database.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
 trait_data = trait_data[trait_data$Species %in% unique(Common_sp_list_AGB), ]
 trait_data = trait_data %>% tidyr::drop_na(AGB)
 length(unique(trait_data$Species))
@@ -470,8 +471,8 @@ p3 = ggplot(trait_data,aes(x=Origin,y=AGB))+
                position = position_dodge(0.5),width=0.15,outlier.size=0.8,outlier.shape = 1)+
   stat_summary(data=trait_data, aes(y=AGB,x=Origin),fill="white",color="black",
                fun="mean",position = position_dodge(0.5),geom="point",shape=21, size=1.5)+
-  scale_color_manual(values = c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values = c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values = mf.clrs)+
+  scale_fill_manual(values = mf.clrs)+
   mytheme+
   labs(x = NULL, y = 'Aboveround biomass (g, log10)' ,title = NULL) + 
   scale_y_continuous(position = "left",labels = scales::label_comma(accuracy =1), limits = c(-2,3.5))+
@@ -479,7 +480,7 @@ p3 = ggplot(trait_data,aes(x=Origin,y=AGB))+
               textsize = 4,y_position = 3.3); p3
 
 ### Traits measured in Field experiment
-trait_data = read.xlsx("Data/Field_traits_database0831_2.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Field_traits_database.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
 trait_data = trait_data[trait_data$Species %in% unique(Common_sp_list_SLA), ] %>% drop_na(SLA)
 length(unique(trait_data$Species))
 trait_data$SLA = sqrt(trait_data$SLA)
@@ -492,8 +493,8 @@ p4 = ggplot(trait_data,aes(x=Origin,y=SLA))+
                position = position_dodge(0.5),width=0.15,outlier.size=0.8,outlier.shape = 1)+
   stat_summary(data=trait_data, aes(y=SLA,x=Origin),fill="white",color="black",
                fun="mean",position = position_dodge(0.5),geom="point",shape=21, size=1.5)+
-  scale_color_manual(values = c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values = c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values = mf.clrs)+
+  scale_fill_manual(values = mf.clrs)+
   labs(x = NULL, y = expression('Specific leaf area (cm'^ 2*'/g, sqrt)'),  title = NULL) + 
   mytheme+
   scale_y_continuous(position = "right",labels = scales::label_comma(accuracy =1), 
@@ -502,7 +503,7 @@ p4 = ggplot(trait_data,aes(x=Origin,y=SLA))+
               textsize = 4,y_position = 25); p4
 
 ###
-trait_data = read.xlsx("Data/Field_traits_database0831_2.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Field_traits_database.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
 trait_data = trait_data[trait_data$Species %in% unique(Common_sp_list_AGB), ] %>% drop_na(Hmax)
 length(unique(trait_data$Species))
 trait_data$Origin=factor(trait_data$Origin, levels = c("Native","Exotic"))
@@ -515,8 +516,8 @@ p5 = ggplot(trait_data,aes(x=Origin,y=Field_Hmax))+
                position = position_dodge(0.5),width=0.15,outlier.size=0.8,outlier.shape = 1)+
   stat_summary(data=trait_data, aes(y=Field_Hmax,x=Origin),fill="white",color="black",
                fun="mean",position = position_dodge(0.5),geom="point",shape=21, size=1.5)+
-  scale_color_manual(values = c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values = c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values = mf.clrs)+
+  scale_fill_manual(values = mf.clrs)+
   mytheme+
   labs(x = NULL, y = 'Maximum height (cm, sqrt)' ,title = NULL) + 
   scale_y_continuous(position = "right",labels = scales::label_comma(accuracy =1), limits = c(1,19))+
@@ -525,7 +526,7 @@ p5 = ggplot(trait_data,aes(x=Origin,y=Field_Hmax))+
 
 
 ###
-trait_data = read.xlsx("Data/Field_traits_database0831_2.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Field_traits_database.xlsx", sheet = "Field_data", colNames = TRUE, rowNames = FALSE)
 trait_data = trait_data[trait_data$Species %in% unique(Common_sp_list_AGB), ] %>% drop_na(AGB)
 length(unique(trait_data$Species))
 trait_data$Origin=factor(trait_data$Origin, levels = c("Native","Exotic"))
@@ -540,8 +541,8 @@ p6 = ggplot(trait_data,aes(x=Origin,y=Field_AGB))+
   stat_summary(data=trait_data, aes(y=Field_AGB,x=Origin),fill="white",color="black",
                fun="mean",position = position_dodge(0.5),geom="point",shape=21, size=1.5)+
   #geom_point(summary_data, mapping = aes(x=Origin,y=Field_AGB), size = 3, color = "black") +
-  scale_color_manual(values = c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values = c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values = mf.clrs)+
+  scale_fill_manual(values = mf.clrs)+
   mytheme +
   labs(x = NULL, y = 'Aboveround biomass (g, log10)' ,title = NULL) + 
   scale_y_continuous(position = "right",labels = scales::label_comma(accuracy =1), limits = c(-2,3.5))+
