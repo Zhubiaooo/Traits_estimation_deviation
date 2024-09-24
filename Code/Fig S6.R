@@ -46,7 +46,7 @@ mytheme = theme_bw()+
 
 ### Comparison of the first and second measurements of plant height in pot experiment
 ### first measurements
-trait_data <- read.xlsx("Data/Pot_traits_database0831.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
+trait_data <- read.xlsx("Data/Pot_traits_database.xlsx", sheet = "Pot_data", colNames = TRUE, rowNames = FALSE)
 trait_data <- trait_data[trait_data$Species %in% unique(Common_sp_list_AGB), ]
 trait_data <- trait_data %>% drop_na(Hmax_time1)
 length(unique(trait_data$Species))
@@ -75,7 +75,7 @@ hist(residuals(mod))
 tuk_quasipoisson <- glht(mod, alternative = 'two.sided', linfct = mcp(Origin = 'Tukey'))
 summary(tuk_quasipoisson) 
 tuk_quasipoisson.cld <- cld(tuk_quasipoisson, level = 0.05, decreasing = TRUE)
-plot(tuk_quasipoisson.cld, col = c('#60A7A6','#FEA6A6'))
+plot(tuk_quasipoisson.cld, col = c('#005097','#FDB435'))
 
 ###Percentage increase
 summarySE(trait_data, measurevar = c("Hmax_time1"), groupvars = c("Origin"))
@@ -105,13 +105,13 @@ ggplot(trait_data,aes(x=Origin,y=Hmax_time1))+
                position = position_dodge(0.5),width=0.15,outlier.size=0.8,outlier.shape = 1)+
   stat_summary(data=trait_data, aes(y=Hmax_time1,x=Origin),fill="white",color="black",
                fun="mean",position = position_dodge(0.5),geom="point",shape=21, size=1.5)+
-  scale_color_manual(values = c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values = c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values = c('#005097','#FDB435'))+
+  scale_fill_manual(values = c('#005097','#FDB435'))+
   mytheme+
   theme(axis.text.x = element_text(angle = 25,size=11,colour = "black", hjust = 1,vjust = 1)) + 
   labs(x = NULL, y = 'Plant height of\nfirst measurements (cm, sqrt)' ,title = NULL) + 
   scale_y_continuous(position = "left",labels = scales::label_comma(accuracy =0.1))+
-  geom_signif(comparisons = list(c(1,2)),test="t.test", annotations='ns.',tip_length = 0.02,size = 0.5,
+  geom_signif(comparisons = list(c(1,2)),test="t.test", annotations='ns',tip_length = 0.02,size = 0.5,
               textsize = 4,y_position = 7.5) -> p1a; p1a
 
 ####
@@ -126,8 +126,8 @@ ggplot(trait_data, mapping = aes(x = Hmax_time1 , y = Hmax)) +
   geom_smooth(method = lm, se = T, color = "black" , fill = "#EBEBEB", alpha = 0.6) + 
   geom_point(trait_data, mapping = aes(x = Hmax_time1 , y = Hmax, shape = Origin, fill = Origin),size=2.2, color = "black")+
   scale_shape_manual(values = c(21,21))+
-  scale_color_manual(values=c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values=c('#005097','#FDB435'))+
+  scale_fill_manual(values=c('#005097','#FDB435'))+
   labs(x = 'Plant height of first measurements (cm, sqrt)',
        y = 'Maximum height (cm, sqrt)') + 
   mytheme + 
@@ -146,13 +146,13 @@ ggplot(trait_data,aes(x=Origin,y=Hmax_time2))+
                position = position_dodge(0.5),width=0.15,outlier.size=0.8,outlier.shape = 1)+
   stat_summary(data=trait_data, aes(y=Hmax_time2,x=Origin),fill="white",color="black",
                fun="mean",position = position_dodge(0.5),geom="point",shape=21, size=1.5)+
-  scale_color_manual(values = c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values = c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values = c('#005097','#FDB435'))+
+  scale_fill_manual(values = c('#005097','#FDB435'))+
   mytheme+
   theme(axis.text.x = element_text(angle = 25,size=11,colour = "black", hjust = 1,vjust = 1)) + 
   labs(x = NULL, y = 'Plant height of\nsecond measurements (cm, sqrt)' ,title = NULL) + 
   scale_y_continuous(position = "left",labels = scales::label_comma(accuracy =0.1))+
-  geom_signif(comparisons = list(c(1,2)),test="t.test", annotations='ns.',tip_length = 0.02,size = 0.5,
+  geom_signif(comparisons = list(c(1,2)),test="t.test", annotations='ns',tip_length = 0.02,size = 0.5,
               textsize = 4,y_position = 10.5) -> p2a; p2a
 
 
@@ -161,8 +161,8 @@ ggplot(trait_data, mapping = aes(x = Hmax_time2 , y = Hmax)) +
   geom_smooth(method = lm, se = T, color = "black" , fill = "#EBEBEB", alpha = 0.6) + 
   geom_point(trait_data, mapping = aes(x = Hmax_time2 , y = Hmax, shape = Origin, fill = Origin),size=2.2, color = "black")+
   scale_shape_manual(values = c(21,21))+
-  scale_color_manual(values=c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values=c('#005097','#FDB435'))+
+  scale_fill_manual(values=c('#005097','#FDB435'))+
   labs(x = 'Plant height of second measurements (cm, sqrt)',
        y = 'Maximum height (cm, sqrt)') + 
   mytheme + 
