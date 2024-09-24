@@ -60,7 +60,7 @@ dim(phyloMat)
 plot(tree)
 
 ### Loading pot experiment database (mean value of traits)
-pot_trait = read.xlsx("Data/Pot_traits_mean0831.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
+pot_trait = read.xlsx("Data/Pot_traits_mean.xlsx", sheet = "Pot_means", colNames = TRUE, rowNames = FALSE)
 colnames(pot_trait) <- paste0(colnames(pot_trait), "_pot")
 colnames(pot_trait)[1] <- "Species"
 nrow(pot_trait)
@@ -69,7 +69,7 @@ nrow(pot_trait)
 ### Loading field experiment database (mean value of traits)
 ### Deming regressive analysis
 ### Specific leaf area
-trait_data = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Field_traits_mean.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 colnames(trait_data) <- paste0(colnames(trait_data), "_field")
 colnames(trait_data)[1] <- "Species"
 nrow(trait_data)
@@ -178,8 +178,8 @@ p1 = ggplot()+
   geom_errorbar(data = dattt,mapping = aes(x = SLA_pot_mean,ymax = SLA_Field_means+field_se, ymin=SLA_Field_means-field_se),width=0.01,size=0.5,alpha = 1, color = "black")+#
   geom_errorbarh(data = dattt,mapping = aes(y = SLA_Field_means,xmax=SLA_pot_mean+pot_se,xmin=SLA_pot_mean-pot_se),height=0.01,size=0.5,alpha = 1, color = "black")+#
   geom_point(data = dattt,mapping = aes(x = SLA_pot_mean, y = SLA_Field_means, fill = Origin, color = Origin),size=3.8, pch = 21, color = "black")+
-  scale_color_manual(values=c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values=c('#005097','#FDB435'))+
+  scale_fill_manual(values=c('#005097','#FDB435'))+
   guides(col = guide_legend(ncol = 1))+
   geom_abline(intercept=-0.1589007, slope=1.5577529, size=1, linetype = 2)+
   geom_abline(intercept=0,slope=1 ,size=1, linetype = 1, color = "#8B0000")+
@@ -195,7 +195,7 @@ p1 = ggplot()+
 
 #################################### Fig 2B ####################################
 ### Hmax
-trait_data = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Field_traits_mean.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 colnames(trait_data) <- paste0(colnames(trait_data), "_field")
 colnames(trait_data)[1] <- "Species"
 
@@ -303,8 +303,8 @@ p2 = ggplot()+
   geom_errorbar(data = dattt,mapping = aes(x = Hmax_pot_mean, ymax = Hmax_Field_means+field_se, ymin=Hmax_Field_means-field_se),width=0.01,size=0.5,alpha = 1, color = "black")+#
   geom_errorbarh(data = dattt,mapping = aes(y = Hmax_Field_means ,xmax=Hmax_pot_mean+pot_se,xmin=Hmax_pot_mean-pot_se),height=0.01,size=0.5,alpha = 1, color = "black")+#
   geom_point(data = dattt,mapping = aes(x = Hmax_pot_mean, y = Hmax_Field_means,fill = Origin, color = Origin),size=3.8, pch = 21, color = "black")+
-  scale_color_manual(values=c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values=c('#005097','#FDB435'))+
+  scale_fill_manual(values=c('#005097','#FDB435'))+
   guides(col = guide_legend(ncol = 1))+
   geom_abline(intercept=-0.002267806, slope=0.941337257, size=1, linetype = 2)+
   geom_abline(intercept=0,slope=1 ,size=1, linetype = 1, color = "#8B0000")+
@@ -318,7 +318,7 @@ p2 = ggplot()+
 
 
 ### AGB
-trait_data = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Field_traits_mean.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 colnames(trait_data) <- paste0(colnames(trait_data), "_field")
 colnames(trait_data)[1] <- "Species"
 
@@ -427,8 +427,8 @@ p3 = ggplot()+
   geom_errorbarh(data = dattt,mapping = aes(y = AGB_Field_means,xmax=AGB_pot_mean+pot_se,xmin=AGB_pot_mean-pot_se),height=0.01,size=0.5,alpha = 1, color = "black")+#
   geom_point(data = AGB_total_dis, mapping = aes(x=AGB_pot_mean,y=AGB_Field_means,fill = Origin, color = Origin),size=2.2, pch = 21, color = "black")+
   geom_point(data = dattt,mapping = aes(x = AGB_pot_mean, y = AGB_Field_means,fill = Origin, color = Origin),size=3.8, pch = 21, color = "black")+
-  scale_color_manual(values=c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values=c('#005097','#FDB435'))+
+  scale_fill_manual(values=c('#005097','#FDB435'))+
   geom_abline(intercept=0,slope=1 ,size=1, linetype = 1, color = "#8B0000")+
   geom_abline(intercept=0.1471211,slope=0.4719499 ,size=1, linetype = 2)+
   mytheme + 
@@ -443,7 +443,7 @@ p3
 
 
 ### all traits
-trait_data = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Field_traits_mean.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 colnames(trait_data) <- paste0(colnames(trait_data), "_field")
 colnames(trait_data)[1] <- "Species"
 
@@ -546,8 +546,8 @@ p_all = ggplot()+
   geom_errorbarh(data = dattt,mapping = aes(y=All_Field_means,xmax=All_pot_mean+pot_se,xmin=All_pot_mean-pot_se),height=0.01,size=0.5,alpha = 1, color = "black")+#
   geom_point(data = All_total_dis, mapping = aes(x=All_pot_mean,y=All_Field_means,fill = Origin, color = Origin),size=2.2, pch = 21, color = "black")+
   geom_point(data = dattt,mapping = aes(x = All_pot_mean, y = All_Field_means,fill = Origin, color = Origin),size=3.8, pch = 21, color = "black")+
-  scale_color_manual(values=c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values=c('#60A7A6','#FEA6A6'))+
+  scale_color_manual(values=c('#005097','#FDB435'))+
+  scale_fill_manual(values=c('#005097','#FDB435'))+
   guides(col = guide_legend(ncol = 1))+
   geom_abline(intercept=0,slope=1 ,size=1, linetype = 1, color = "#8B0000")+
   geom_abline(intercept=0.0605427 ,slope=0.8563063,size=1, linetype = 1)+
