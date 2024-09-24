@@ -64,7 +64,7 @@ colnames(pot_trait)[1] <- "Species"
 nrow(pot_trait)
 
 ### all traits
-trait_data = read.xlsx("Data/Field_traits_mean0831_2.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
+trait_data = read.xlsx("Data/Field_traits_mean.xlsx", sheet = "Field_means", colNames = TRUE, rowNames = FALSE)
 colnames(trait_data) <- paste0(colnames(trait_data), "_field")
 colnames(trait_data)[1] <- "Species"
 
@@ -112,7 +112,7 @@ library(MuMIn)
 library(car)
 library(AICcmodavg)
 library(ggplot2)
-field_com_data = read.xlsx("Data/all_row_data0829.xlsx", sheet = "field_data_mean", rowNames = F, colNames = T)
+field_com_data = read.xlsx("Data/all_row_data.xlsx", sheet = "field_data_mean", rowNames = F, colNames = T)
 head(field_com_data)
 
 ### Add uniqueness parameter
@@ -142,7 +142,7 @@ for (i in Seed_source) {
   all_summary_glmer = rbind(all_summary_glmer, Total_summary)
 }
 all_summary_glmer$R2m = round(all_summary_glmer$R2m, 3)
-
+all_summary_glmer$p_value = round(all_summary_glmer$p_value, 3)
 ##### Overall field data analysis
 colnames(field_com_data)
 mod1 = glmer(exist_prob ~ All_pot_mean + (1|Block/Plot_num) , na.action=na.omit, family=binomial, data=field_com_data)
@@ -173,11 +173,11 @@ for (i in Seed_source) {
 }
 all_summary_lmer$p_value = round(all_summary_lmer$p_value, 3)
 
-select_data = subset(field_com_data, Seed_source == "Guangdong") %>% tidyr::drop_na(rebio2022_100)
-summary(select_data$All_Field_means)
-summary(select_data$rebio2022_100)
-mod1 <- lmer(rebio2022_100 ~ All_pot_mean + (1|Block) , na.action=na.omit, data=select_data)
-Anova(mod1)
+#select_data = subset(field_com_data, Seed_source == "Guangdong") %>% tidyr::drop_na(rebio2022_100)
+#summary(select_data$All_Field_means)
+#summary(select_data$rebio2022_100)
+#mod1 <- lmer(rebio2022_100 ~ All_pot_mean + (1|Block) , na.action=na.omit, data=select_data)
+#Anova(mod1)
 
 ##### Overall data analysis
 colnames(field_com_data)
@@ -185,7 +185,7 @@ select_data = field_com_data %>% tidyr::drop_na(rebio2022_100)
 nrow(select_data); length(unique(select_data$Species))
 
 mod1 = lmer(rebio2022_100 ~ All_pot_mean + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
-mod1 = lmer(rebio2022_100 ~ All_pot_mean + (1|Block/Plot_num) , data=select_data)
+#mod1 = lmer(rebio2022_100 ~ All_pot_mean + (1|Block/Plot_num) , data=select_data)
 Anova(mod1); r.squaredGLMM(mod1)[1,]
 
 mod2 = lmer(rebio2022_100 ~ All_Field_means + (1|Block/Plot_num) , na.action=na.omit, data=field_com_data)
@@ -224,10 +224,10 @@ ggplot(field_com_data, aes(x=All_pot_mean, y=exist_prob)) +
   ylab('Odds of persistence') + 
   xlab('Functional distinctiveness\nestimated in pot experiment') +
   mytheme +
-  scale_fill_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                             "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
+  scale_fill_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                             "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
+  scale_color_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                              "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01))-> p1; p1
 
@@ -261,10 +261,10 @@ ggplot(field_com_data, aes(x=(All_Field_means), y=exist_prob)) +
   xlab('Functional distinctiveness\nestimated in field experiment') +
   mytheme + theme(legend.position = "none") + 
   #scale_fill_manual(values = c('#60A7A6','#FEA6A6'))+
-  scale_fill_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                             "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
+  scale_fill_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                             "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
+  scale_color_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                              "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
   scale_y_continuous(labels = scales::label_comma(accuracy =0.01)) ->p2; p2
 
@@ -316,10 +316,10 @@ ggplot(field_com_data_no, aes(x=All_pot_mean, y=rebio2022_100)) +
   geom_line(data = field_com_data_all, mapping = aes(x=All_pot_mean, y=F0), size=1.5, linetype = 1, color = "black") +
   geom_ribbon(data = field_com_data_all, mapping = aes(x=All_pot_mean,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = "#EBEBEB"), alpha = I(0.1)) +
   geom_point(aes(fill = Seed_source),size = 2.2, pch = 21) + # fill = "#00000022", color = "#0A0A0A"
-  scale_fill_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                             "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
+  scale_fill_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                             "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
+  scale_color_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                              "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
   #ggrepel::geom_text_repel(mapping = aes(x=All_pot_mean,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
   #                         max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
@@ -352,10 +352,10 @@ ggplot(field_com_data_no, aes(x=All_Field_means, y=rebio2022_100)) +
   geom_line(data = field_com_data_all, mapping = aes(x=All_Field_means, y=F0), size=1.5, linetype = 1, color = "black") +
   geom_ribbon(data = field_com_data_all, mapping = aes(x=All_Field_means,ymin = F0 - 1.96 * SE,ymax = F0 + 1.96 * SE, fill = "#EBEBEB"), alpha = I(0.1)) +
   geom_point(aes(fill = Seed_source),size = 2.2, pch = 21) + # fill = "#00000022", color = "#0A0A0A"
-  scale_fill_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                             "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
-  scale_color_manual(values=c("Shandong" = "#376694", "Henan" = "#73BCD5", "Hubei" = "#ABDCE0",
-                              "Hunan" = "#EFBA55","Guangxi" = "#E68C51","Guangdong" = "#994240"))+
+  scale_fill_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                             "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
+  scale_color_manual(values=c("Shandong" = "#E69F00", "Henan" = "#57B4E9", "Hubei" = "#019E73",
+                              "Hunan" = "#F0E442","Guangxi" = "#0072B2","Guangdong" = "#D55E00"))+
   #ggrepel::geom_text_repel(mapping = aes(x=All_Field_means,y=rebio2022_100,label=Latin_name), data = df2,size = 2.8,segment.color = "black", color = "black",direction = "both",box.padding = 0.6,
   #                         max.overlaps = getOption("ggrepel.max.overlaps", default = 25), fontface = "italic") +
   scale_x_continuous(labels = scales::label_comma(accuracy =0.1)) +
